@@ -226,8 +226,8 @@ export default function TopUpForm({ gameId, requiresZoneId, packages }: { gameId
             Enter Account Details
           </h2>
           
-          <div className={clsx("grid gap-4", requiresZoneId ? "grid-cols-1 md:grid-cols-2" : "grid-cols-1")}>
-            <div>
+          <div className="flex flex-row gap-3">
+            <div className={clsx(requiresZoneId ? "flex-[6]" : "w-full")}>
               <input
                 type="text"
                 value={userId}
@@ -238,12 +238,12 @@ export default function TopUpForm({ gameId, requiresZoneId, packages }: { gameId
             </div>
             
             {requiresZoneId && (
-              <div>
+              <div className="flex-[4]">
                 <input
                   type="text"
                   value={zoneId}
                   onChange={(e) => setZoneId(e.target.value)}
-                  placeholder="Enter Zone ID"
+                  placeholder="Zone ID"
                   className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary transition-all"
                 />
               </div>
