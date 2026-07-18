@@ -1,0 +1,1 @@
+const puppeteer = require('puppeteer'); (async () => { const browser = await puppeteer.launch(); const page = await browser.newPage(); await page.goto('https://api.g2bulk.com/', {waitUntil: 'networkidle2'}); const html = await page.content(); const paths = [...html.matchAll(/class=.path.[^>]*>([^<]+)</g)].map(m => m[1]); console.log(paths); await browser.close(); })();

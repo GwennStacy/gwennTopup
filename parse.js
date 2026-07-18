@@ -1,0 +1,1 @@
+﻿const fs = require('fs'); const content = fs.readFileSync('C:/Users/Admin/.gemini/antigravity-ide/brain/2ad76940-f778-45f1-8c78-5a53e946ad1c/.system_generated/steps/226/content.md', 'utf8'); const matches = [...content.matchAll(/class=.path.[^>]*>([^<]+)<\/span>/g)].map(m => m[1]); console.log(matches);
