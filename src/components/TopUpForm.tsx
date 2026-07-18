@@ -25,33 +25,83 @@ interface PackageType {
 
 const DiamondSVG = ({ className = "" }: { className?: string }) => (
   <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-    <ellipse cx="50" cy="85" rx="25" ry="8" fill="black" opacity="0.3" />
-    <path d="M35 25 L15 45 L50 45 Z" fill="#33CCFF" />
-    <path d="M35 25 L65 25 L50 45 Z" fill="#99EEFF" />
-    <path d="M65 25 L85 45 L50 45 Z" fill="#0099FF" />
-    <path d="M15 45 L50 45 L50 85 Z" fill="#0077CC" />
-    <path d="M85 45 L50 45 L50 85 Z" fill="#004499" />
-    <path d="M35 25 L65 25 L85 45 L50 85 L15 45 Z" stroke="white" strokeWidth="1" strokeOpacity="0.3" strokeLinejoin="round" />
+    <defs>
+      <linearGradient id="blueTop1" x1="15" y1="25" x2="50" y2="45" gradientUnits="userSpaceOnUse">
+        <stop stopColor="#4DE1FF" />
+        <stop offset="1" stopColor="#0094FF" />
+      </linearGradient>
+      <linearGradient id="blueTop2" x1="50" y1="25" x2="50" y2="45" gradientUnits="userSpaceOnUse">
+        <stop stopColor="#99F0FF" />
+        <stop offset="1" stopColor="#33C5FF" />
+      </linearGradient>
+      <linearGradient id="blueTop3" x1="85" y1="25" x2="50" y2="45" gradientUnits="userSpaceOnUse">
+        <stop stopColor="#00A3FF" />
+        <stop offset="1" stopColor="#0057FF" />
+      </linearGradient>
+      <linearGradient id="blueBot1" x1="15" y1="45" x2="50" y2="85" gradientUnits="userSpaceOnUse">
+        <stop stopColor="#0080FF" />
+        <stop offset="1" stopColor="#0037A3" />
+      </linearGradient>
+      <linearGradient id="blueBot2" x1="85" y1="45" x2="50" y2="85" gradientUnits="userSpaceOnUse">
+        <stop stopColor="#0047D6" />
+        <stop offset="1" stopColor="#001452" />
+      </linearGradient>
+      <filter id="glowLight" x="-20%" y="-20%" width="140%" height="140%">
+        <feGaussianBlur stdDeviation="2" result="blur" />
+        <feComposite in="SourceGraphic" in2="blur" operator="over" />
+      </filter>
+    </defs>
+    <ellipse cx="50" cy="88" rx="25" ry="6" fill="black" opacity="0.3" />
+    <path d="M35 25 L15 45 L50 45 Z" fill="url(#blueTop1)" />
+    <path d="M35 25 L65 25 L50 45 Z" fill="url(#blueTop2)" />
+    <path d="M65 25 L85 45 L50 45 Z" fill="url(#blueTop3)" />
+    <path d="M15 45 L50 45 L50 85 Z" fill="url(#blueBot1)" />
+    <path d="M85 45 L50 45 L50 85 Z" fill="url(#blueBot2)" />
+    <path d="M35 25 L65 25 L85 45 L50 85 L15 45 Z" stroke="white" strokeWidth="1" strokeOpacity="0.4" strokeLinejoin="round" />
     <path d="M15 45 L85 45" stroke="white" strokeWidth="1.5" strokeOpacity="0.5" />
-    <path d="M35 25 L50 45 L65 25" stroke="white" strokeWidth="1.5" strokeOpacity="0.4" />
-    <path d="M50 45 L50 85" stroke="white" strokeWidth="1" strokeOpacity="0.4" />
-    <path d="M60 20 L63 25 L68 28 L63 31 L60 36 L57 31 L52 28 L57 25 Z" fill="white" opacity="0.8" />
+    <path d="M35 25 L50 45 L65 25" stroke="white" strokeWidth="1.5" strokeOpacity="0.6" />
+    <path d="M50 45 L50 85" stroke="white" strokeWidth="1.5" strokeOpacity="0.4" />
+    <path d="M60 20 L62 24 L66 26 L62 28 L60 32 L58 28 L54 26 L58 24 Z" fill="white" filter="url(#glowLight)" opacity="0.9" />
+    <circle cx="28" cy="38" r="1.5" fill="white" opacity="0.8" />
   </svg>
 );
 
 const RedDiamondSVG = ({ className = "" }: { className?: string }) => (
   <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-    <ellipse cx="50" cy="85" rx="25" ry="8" fill="black" opacity="0.3" />
-    <path d="M35 25 L15 45 L50 45 Z" fill="#FF5555" />
-    <path d="M35 25 L65 25 L50 45 Z" fill="#FF8888" />
-    <path d="M65 25 L85 45 L50 45 Z" fill="#FF2222" />
-    <path d="M15 45 L50 45 L50 85 Z" fill="#CC0000" />
-    <path d="M85 45 L50 45 L50 85 Z" fill="#990000" />
-    <path d="M35 25 L65 25 L85 45 L50 85 L15 45 Z" stroke="white" strokeWidth="1" strokeOpacity="0.3" strokeLinejoin="round" />
+    <defs>
+      <linearGradient id="redTop1" x1="15" y1="25" x2="50" y2="45" gradientUnits="userSpaceOnUse">
+        <stop stopColor="#FF6B6B" />
+        <stop offset="1" stopColor="#E60000" />
+      </linearGradient>
+      <linearGradient id="redTop2" x1="50" y1="25" x2="50" y2="45" gradientUnits="userSpaceOnUse">
+        <stop stopColor="#FFA3A3" />
+        <stop offset="1" stopColor="#FF3333" />
+      </linearGradient>
+      <linearGradient id="redTop3" x1="85" y1="25" x2="50" y2="45" gradientUnits="userSpaceOnUse">
+        <stop stopColor="#E60000" />
+        <stop offset="1" stopColor="#990000" />
+      </linearGradient>
+      <linearGradient id="redBot1" x1="15" y1="45" x2="50" y2="85" gradientUnits="userSpaceOnUse">
+        <stop stopColor="#CC0000" />
+        <stop offset="1" stopColor="#660000" />
+      </linearGradient>
+      <linearGradient id="redBot2" x1="85" y1="45" x2="50" y2="85" gradientUnits="userSpaceOnUse">
+        <stop stopColor="#990000" />
+        <stop offset="1" stopColor="#330000" />
+      </linearGradient>
+    </defs>
+    <ellipse cx="50" cy="88" rx="25" ry="6" fill="black" opacity="0.3" />
+    <path d="M35 25 L15 45 L50 45 Z" fill="url(#redTop1)" />
+    <path d="M35 25 L65 25 L50 45 Z" fill="url(#redTop2)" />
+    <path d="M65 25 L85 45 L50 45 Z" fill="url(#redTop3)" />
+    <path d="M15 45 L50 45 L50 85 Z" fill="url(#redBot1)" />
+    <path d="M85 45 L50 45 L50 85 Z" fill="url(#redBot2)" />
+    <path d="M35 25 L65 25 L85 45 L50 85 L15 45 Z" stroke="white" strokeWidth="1" strokeOpacity="0.4" strokeLinejoin="round" />
     <path d="M15 45 L85 45" stroke="white" strokeWidth="1.5" strokeOpacity="0.5" />
-    <path d="M35 25 L50 45 L65 25" stroke="white" strokeWidth="1.5" strokeOpacity="0.4" />
-    <path d="M50 45 L50 85" stroke="white" strokeWidth="1" strokeOpacity="0.4" />
-    <path d="M60 20 L63 25 L68 28 L63 31 L60 36 L57 31 L52 28 L57 25 Z" fill="white" opacity="0.8" />
+    <path d="M35 25 L50 45 L65 25" stroke="white" strokeWidth="1.5" strokeOpacity="0.6" />
+    <path d="M50 45 L50 85" stroke="white" strokeWidth="1.5" strokeOpacity="0.4" />
+    <path d="M60 20 L62 24 L66 26 L62 28 L60 32 L58 28 L54 26 L58 24 Z" fill="white" filter="url(#glowLight)" opacity="0.9" />
+    <circle cx="28" cy="38" r="1.5" fill="white" opacity="0.8" />
   </svg>
 );
 
@@ -81,9 +131,9 @@ const GameDiamond = ({ gameId, amount, isActive, imageUrl, className = "" }: { g
   
   if (imageUrl) {
     return (
-      <div className={clsx("relative flex items-center justify-center h-16 w-full", className)}>
+      <div className={clsx("relative flex items-center justify-center h-full w-full", className)}>
         <div className={clsx("absolute inset-0 bg-blue-500/20 blur-xl rounded-full transition-opacity duration-300", isActive ? "opacity-100" : "opacity-0")}></div>
-        <img src={imageUrl} alt="Package Image" className="w-14 h-14 object-contain relative z-10 drop-shadow-[0_4px_10px_rgba(0,0,0,0.4)] transition-transform duration-300 group-hover:scale-110" />
+        <img src={imageUrl} alt="Package Image" className="w-full h-full object-contain relative z-10 drop-shadow-[0_8px_16px_rgba(0,0,0,0.6)] transition-transform duration-300 group-hover:scale-110" />
       </div>
     );
   }
@@ -96,34 +146,40 @@ const GameDiamond = ({ gameId, amount, isActive, imageUrl, className = "" }: { g
   return (
     <div className={clsx("relative flex items-center justify-center h-16 w-full", className)}>
       {/* Background glow that only shows when active */}
-      <div className={clsx("absolute inset-0 bg-blue-500/20 blur-xl rounded-full transition-opacity duration-300", isActive ? "opacity-100" : "opacity-0")}></div>
+      <div className={clsx("absolute inset-0 blur-2xl rounded-full transition-opacity duration-300", 
+        isActive ? "opacity-100" : "opacity-0 group-hover:opacity-40",
+        gameId === "freefire" ? "bg-red-500/30" : 
+        gameId === "pubgm" ? "bg-yellow-500/30" : 
+        gameId === "hok" ? "bg-purple-500/30" : 
+        "bg-blue-500/30"
+      )}></div>
       
       {count === 1 && (
-        <Icon className="w-12 h-12 relative z-10 drop-shadow-[0_4px_10px_rgba(0,0,0,0.4)] transition-transform duration-300 group-hover:scale-110" />
+        <Icon className="w-14 h-14 relative z-10 drop-shadow-[0_8px_16px_rgba(0,0,0,0.5)] transition-transform duration-500 group-hover:scale-110 group-hover:-translate-y-1 group-hover:rotate-6" />
       )}
       
       {count === 2 && (
         <>
-          <Icon className="w-10 h-10 absolute left-1/2 -translate-x-[90%] top-2 z-0 drop-shadow-md opacity-80" />
-          <Icon className="w-12 h-12 relative z-10 drop-shadow-[0_4px_10px_rgba(0,0,0,0.4)] transition-transform duration-300 group-hover:scale-110" />
+          <Icon className="w-10 h-10 absolute left-1/2 -translate-x-[90%] top-2 z-0 drop-shadow-lg opacity-90 transition-transform duration-500 group-hover:-translate-x-[110%] group-hover:rotate-[-10deg]" />
+          <Icon className="w-14 h-14 relative z-10 drop-shadow-[0_8px_16px_rgba(0,0,0,0.5)] transition-transform duration-500 group-hover:scale-110 group-hover:-translate-y-1 group-hover:rotate-6" />
         </>
       )}
 
       {count === 3 && (
         <>
-          <Icon className="w-9 h-9 absolute left-1/2 -translate-x-[110%] top-4 z-0 drop-shadow-md opacity-70" />
-          <Icon className="w-9 h-9 absolute left-1/2 translate-x-[20%] top-2 z-0 drop-shadow-md opacity-80" />
-          <Icon className="w-12 h-12 relative z-10 drop-shadow-[0_4px_10px_rgba(0,0,0,0.4)] transition-transform duration-300 group-hover:scale-110" />
+          <Icon className="w-9 h-9 absolute left-1/2 -translate-x-[120%] top-4 z-0 drop-shadow-md opacity-80 transition-transform duration-500 group-hover:-translate-x-[140%] group-hover:-rotate-12" />
+          <Icon className="w-10 h-10 absolute left-1/2 translate-x-[20%] top-2 z-0 drop-shadow-lg opacity-90 transition-transform duration-500 group-hover:translate-x-[40%] group-hover:rotate-12" />
+          <Icon className="w-14 h-14 relative z-10 drop-shadow-[0_8px_16px_rgba(0,0,0,0.5)] transition-transform duration-500 group-hover:scale-110 group-hover:-translate-y-2" />
         </>
       )}
 
       {count === 5 && (
         <>
-          <Icon className="w-8 h-8 absolute left-1/2 -translate-x-[130%] top-4 z-0 opacity-70 drop-shadow-md" />
-          <Icon className="w-10 h-10 absolute left-1/2 -translate-x-[80%] top-1 z-10 opacity-90 drop-shadow-md" />
-          <Icon className="w-9 h-9 absolute left-1/2 translate-x-[10%] top-1 z-0 opacity-80 drop-shadow-md" />
-          <Icon className="w-9 h-9 absolute left-1/2 translate-x-[40%] top-5 z-10 opacity-80 drop-shadow-md" />
-          <Icon className="w-12 h-12 relative z-20 drop-shadow-[0_4px_10px_rgba(0,0,0,0.4)] transition-transform duration-300 group-hover:scale-110" />
+          <Icon className="w-8 h-8 absolute left-1/2 -translate-x-[140%] top-4 z-0 opacity-80 drop-shadow-md transition-transform duration-500 group-hover:-translate-x-[160%] group-hover:-rotate-12" />
+          <Icon className="w-10 h-10 absolute left-1/2 -translate-x-[80%] top-1 z-10 opacity-95 drop-shadow-lg transition-transform duration-500 group-hover:-translate-x-[100%] group-hover:-translate-y-2 group-hover:-rotate-6" />
+          <Icon className="w-9 h-9 absolute left-1/2 translate-x-[10%] top-1 z-0 opacity-90 drop-shadow-md transition-transform duration-500 group-hover:translate-x-[30%] group-hover:-translate-y-1 group-hover:rotate-12" />
+          <Icon className="w-10 h-10 absolute left-1/2 translate-x-[50%] top-5 z-10 opacity-90 drop-shadow-lg transition-transform duration-500 group-hover:translate-x-[70%] group-hover:rotate-6" />
+          <Icon className="w-14 h-14 relative z-20 drop-shadow-[0_10px_20px_rgba(0,0,0,0.6)] transition-transform duration-500 group-hover:scale-110 group-hover:-translate-y-1" />
         </>
       )}
     </div>
@@ -284,7 +340,7 @@ export default function TopUpForm({ gameId, requiresZoneId, packages }: { gameId
             Select Package (កញ្ចប់ទិញ)
           </h2>
           
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
             {packages.length === 0 ? (
               <div className="col-span-full text-center py-8 text-gray-500">No packages available for this game yet.</div>
             ) : (
@@ -293,35 +349,35 @@ export default function TopUpForm({ gameId, requiresZoneId, packages }: { gameId
                   key={pkg.id}
                   onClick={() => setSelectedPackage(pkg.id)}
                   className={clsx(
-                    "relative p-3 sm:p-4 rounded-xl cursor-pointer transition-all duration-300 border flex flex-row items-center gap-3 sm:gap-4 group overflow-hidden",
+                    "relative p-3 sm:p-4 rounded-2xl cursor-pointer transition-all duration-300 border flex flex-row items-center gap-3 sm:gap-4 group overflow-hidden",
                     selectedPackage === pkg.id
-                      ? "bg-secondary/20 border-secondary shadow-[0_0_20px_rgba(139,92,246,0.3)]"
-                      : "bg-white/5 border-white/10 hover:border-white/30 hover:bg-white/10"
+                      ? "bg-gradient-to-r from-secondary/20 to-secondary/5 border-secondary shadow-[0_4px_20px_rgba(139,92,246,0.3)] scale-[1.02] z-10"
+                      : "bg-white/5 border-white/10 hover:border-white/30 hover:bg-white/10 hover:scale-[1.01]"
                   )}
                 >
                   {/* Subtle active background glow */}
                   {selectedPackage === pkg.id && (
-                    <div className="absolute inset-0 bg-gradient-to-r from-secondary/10 to-transparent pointer-events-none"></div>
+                    <div className="absolute inset-0 bg-secondary/10 blur-xl pointer-events-none"></div>
                   )}
 
                   {/* Bonus Tag (Top Right) */}
                   {pkg.popular && (
-                    <div className="absolute top-0 right-0 bg-gradient-to-r from-secondary to-[#c084fc] text-white text-[10px] sm:text-xs font-bold px-2 py-1 rounded-bl-xl rounded-tr-xl shadow-lg z-20">
-                      +1 ពេជ្រ
+                    <div className="absolute top-0 right-0 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[10px] sm:text-xs font-bold px-2 py-0.5 rounded-bl-xl shadow-lg z-20 flex items-center gap-1">
+                      <Zap size={10} className="fill-white" /> Popular
                     </div>
                   )}
                   
                   {/* Premium Diamond Cluster */}
-                  <div className="w-10 h-10 sm:w-14 sm:h-14 shrink-0 flex items-center justify-center relative z-10">
+                  <div className="w-14 h-14 sm:w-16 sm:h-16 shrink-0 flex items-center justify-center relative z-10">
                     <GameDiamond gameId={gameId} amount={pkg.diamonds || pkg.price * 50} isActive={selectedPackage === pkg.id} imageUrl={pkg.image_url} />
                   </div>
                   
                   {/* Price and Name */}
                   <div className="flex flex-col text-left relative z-10 flex-1">
-                    <span className="font-bold text-sm sm:text-base text-[#FACC15]">
+                    <span className="font-black text-lg sm:text-xl text-[#FACC15] drop-shadow-md">
                       ${pkg.price.toFixed(2)}
                     </span>
-                    <span className={clsx("text-xs sm:text-sm font-medium", selectedPackage === pkg.id ? "text-white" : "text-gray-200")}>
+                    <span className={clsx("font-bold text-xs sm:text-sm mt-0.5 leading-tight", selectedPackage === pkg.id ? "text-white" : "text-gray-300")}>
                       {pkg.name}
                     </span>
                   </div>

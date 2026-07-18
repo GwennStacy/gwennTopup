@@ -124,8 +124,7 @@ export async function POST(req: Request) {
       }
       
       if (pkg) {
-        // Update existing
-        pkg.name = service.name;
+        // Update existing (do not overwrite pkg.name so custom names remain intact)
         pkg.original_price = originalPrice;
         pkg.api_product_id = service.service.toString();
         pkg.diamonds = diamonds;
