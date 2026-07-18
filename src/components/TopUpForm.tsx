@@ -233,7 +233,7 @@ export default function TopUpForm({ gameId, requiresZoneId, packages }: { gameId
                 value={userId}
                 onChange={(e) => setUserId(e.target.value)}
                 placeholder="Enter User ID"
-                className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary transition-all"
+                className="w-full bg-white/5 border border-white/10 rounded-lg py-2 px-4 text-white focus:outline-none focus:border-primary transition-all"
               />
             </div>
             
@@ -244,17 +244,17 @@ export default function TopUpForm({ gameId, requiresZoneId, packages }: { gameId
                   value={zoneId}
                   onChange={(e) => setZoneId(e.target.value)}
                   placeholder="Zone ID"
-                  className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary transition-all"
+                  className="w-full bg-white/5 border border-white/10 rounded-lg py-2 px-4 text-white focus:outline-none focus:border-primary transition-all"
                 />
               </div>
             )}
           </div>
 
-          <div className="mt-6 flex flex-col sm:flex-row items-center gap-4">
+          <div className="mt-5 flex flex-col sm:flex-row items-center gap-3">
             <button
               onClick={handleCheckId}
               disabled={!userId || isChecking}
-              className="w-full sm:w-auto px-6 py-3 rounded-xl bg-primary hover:bg-primary/90 disabled:opacity-50 text-white font-medium transition-all flex items-center justify-center gap-2 glow-primary"
+              className="w-full sm:w-auto px-6 py-2 rounded-lg bg-primary hover:bg-primary/90 disabled:opacity-50 text-white font-medium transition-all flex items-center justify-center gap-2 glow-primary"
             >
               {isChecking ? <Loader2 size={18} className="animate-spin" /> : <User size={18} />}
               Verify ID
