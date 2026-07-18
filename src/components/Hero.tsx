@@ -45,7 +45,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative pt-24 pb-8 md:pt-32 md:pb-12">
+    <section className="relative pt-20 pb-4 md:pt-28 md:pb-6">
       <div className="container mx-auto px-4 md:px-6 lg:px-8">
         <div className="relative w-full h-[200px] sm:h-[300px] md:h-[400px] lg:h-[500px] rounded-3xl overflow-hidden group shadow-[0_0_40px_rgba(91,95,255,0.15)] border border-white/5">
 

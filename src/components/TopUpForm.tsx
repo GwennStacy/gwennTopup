@@ -216,7 +216,7 @@ export default function TopUpForm({ gameId, requiresZoneId, packages }: { gameId
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 pb-28 lg:pb-0">
       {/* Main Form Area */}
-      <div className="lg:col-span-2 space-y-8">
+      <div className="lg:col-span-2 space-y-5">
         
         {/* Step 1: Account Info */}
         <div className="glass-card p-6 md:p-8 rounded-3xl border border-white/5 relative overflow-hidden">

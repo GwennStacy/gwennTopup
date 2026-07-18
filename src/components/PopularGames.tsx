@@ -53,9 +53,9 @@ export default function PopularGames() {
   }, []);
 
   return (
-    <section id="games" className="py-12 md:py-20 relative">
+    <section id="games" className="py-8 md:py-12 relative">
       <div className="container mx-auto px-4 md:px-6 lg:px-8 relative z-10">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 md:mb-12 gap-4">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-6 md:mb-8 gap-4">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
