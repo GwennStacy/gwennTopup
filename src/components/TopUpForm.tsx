@@ -221,7 +221,7 @@ export default function TopUpForm({ gameId, requiresZoneId = false, packages = [
       key={pkg.id}
       onClick={() => setSelectedPackage(pkg.id)}
       className={clsx(
-        "relative p-3 rounded-md cursor-pointer transition-all duration-300 border flex flex-col items-center justify-center gap-2 group overflow-hidden text-center",
+        "relative p-2 sm:p-3 rounded-xl cursor-pointer transition-all duration-300 border flex flex-col items-center justify-center gap-1.5 sm:gap-2 group overflow-hidden text-center",
         selectedPackage === pkg.id
           ? "bg-gradient-to-b from-secondary/20 to-secondary/5 border-secondary shadow-[0_4px_20px_rgba(139,92,246,0.3)] scale-[1.02] z-10"
           : "bg-white/5 border-white/10 hover:border-white/30 hover:bg-white/10 hover:scale-[1.01]"
@@ -234,22 +234,22 @@ export default function TopUpForm({ gameId, requiresZoneId = false, packages = [
 
       {/* Bonus Tag (Top Right) */}
       {(pkg.badge || pkg.popular) && (
-        <div className="absolute top-0 right-0 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-bl-md shadow-lg z-20 flex items-center gap-1">
-          <Zap size={8} className="fill-white" /> {pkg.badge || "Hot"}
+        <div className="absolute top-0 right-0 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[8px] sm:text-[9px] font-bold px-1.5 py-0.5 rounded-bl-md shadow-lg z-20 flex items-center gap-1">
+          <Zap size={8} className="fill-white hidden sm:block" /> {pkg.badge || "Hot"}
         </div>
       )}
       
       {/* Premium Diamond Cluster */}
-      <div className="w-12 h-12 sm:w-14 sm:h-14 shrink-0 flex items-center justify-center relative z-10">
+      <div className="w-10 h-10 sm:w-14 sm:h-14 shrink-0 flex items-center justify-center relative z-10">
         <GameDiamond gameId={gameId} amount={pkg.diamonds || pkg.price * 50} isActive={selectedPackage === pkg.id} imageUrl={pkg.image_url} />
       </div>
       
       {/* Price and Name */}
-      <div className="flex flex-col relative z-10 w-full mt-1">
-        <span className="font-black text-base sm:text-lg text-[#FACC15] drop-shadow-md leading-none">
+      <div className="flex flex-col relative z-10 w-full mt-0.5 sm:mt-1">
+        <span className="font-black text-sm sm:text-lg text-[#FACC15] drop-shadow-md leading-none">
           ${pkg.price.toFixed(2)}
         </span>
-        <span className={clsx("font-semibold text-[10px] sm:text-xs mt-1.5 leading-tight", selectedPackage === pkg.id ? "text-white" : "text-gray-300")}>
+        <span className={clsx("font-semibold text-[9px] sm:text-xs mt-1 sm:mt-1.5 leading-tight truncate px-1", selectedPackage === pkg.id ? "text-white" : "text-gray-300")}>
           {pkg.name}
         </span>
       </div>
@@ -416,7 +416,7 @@ export default function TopUpForm({ gameId, requiresZoneId = false, packages = [
                       <div className={clsx("w-2 h-2 rounded-full", colorClass)}></div>
                       {cat.name}
                     </h3>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4">
+                    <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 xl:grid-cols-6 gap-2 sm:gap-4">
                       {groupPackages.map(pkg => renderPackageCard(pkg))}
                     </div>
                     {/* Visual Divider if not the last non-empty group */}
