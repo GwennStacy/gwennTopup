@@ -124,7 +124,7 @@ export async function POST(req: Request) {
       }
       
       if (pkg) {
-        // Update existing (do not overwrite pkg.name so custom names remain intact)
+        // Update existing (do not overwrite pkg.name or category so custom values remain intact)
         pkg.original_price = originalPrice;
         pkg.api_product_id = service.service.toString();
         pkg.diamonds = diamonds;
@@ -132,6 +132,9 @@ export async function POST(req: Request) {
         await pkg.save();
       } else {
         // Create new
+        const passKeywords = /pass|prime|weekly|monthly|pack|member|starlight|twilight|emblem|materials|deal/i;
+        const defaultCategory = passKeywords.test(service.name) ? "Passes & Deals" : "Normal Top-Up";
+
         await Package.create({
           game_id: matchingGame.id_string,
           name: service.name,
@@ -140,6 +143,7 @@ export async function POST(req: Request) {
           diamonds,
           active: true,
           api_product_id: service.service.toString(),
+          category: defaultCategory,
         });
       }
 

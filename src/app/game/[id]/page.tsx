@@ -8,6 +8,9 @@ import connectToDatabase from "@/lib/mongodb";
 import mongoose from "mongoose";
 import Game from "@/models/Game";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default async function GameTopUpPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = await params;
   const id = resolvedParams.id;
@@ -43,8 +46,11 @@ export default async function GameTopUpPage({ params }: { params: Promise<{ id: 
   await connectToDatabase();
   // Fetch packages for this game
   const Package = mongoose.models.Package || (await import("@/models/Package")).default;
-  const packagesData = await Package.find({ game_id: id, active: true }).sort({ price: 1 }).lean();
+  const packagesData = await Package.find({ game_id: id, active: true }).sort({ sort_order: 1, price: 1 }).lean();
   
+  const CategoryModel = mongoose.models.Category || (await import("@/models/Category")).default;
+  const categoriesData = await CategoryModel.find({ game_id: id }).sort({ sort_order: 1 }).lean();
+
   // Serialize Mongoose objects for Client Component
   const packages = packagesData.map((pkg: any) => ({
     id: pkg._id.toString(),
@@ -53,6 +59,14 @@ export default async function GameTopUpPage({ params }: { params: Promise<{ id: 
     diamonds: pkg.diamonds,
     popular: pkg.is_popular,
     image_url: pkg.image_url,
+    category: pkg.category,
+    badge: pkg.badge,
+  }));
+
+  const categories = categoriesData.map((cat: any) => ({
+    id: cat._id.toString(),
+    name: cat.name,
+    sort_order: cat.sort_order,
   }));
 
   return (
@@ -110,7 +124,7 @@ export default async function GameTopUpPage({ params }: { params: Promise<{ id: 
 
       {/* Top Up Form Section */}
       <div className="container mx-auto px-4 md:px-6 lg:px-8 py-6 md:py-12">
-        <TopUpForm gameId={gameApiId} requiresZoneId={gameData.requiresZoneId} packages={packages} />
+        <TopUpForm gameId={gameApiId} requiresZoneId={gameData.requiresZoneId} packages={packages} categories={categories} />
       </div>
 
       <Footer />

@@ -10,6 +10,9 @@ export interface IPackage extends Document {
   active: boolean;
   api_product_id?: string;
   image_url?: string;
+  category?: string;
+  badge?: string;
+  sort_order?: number;
 }
 
 const PackageSchema = new Schema(
@@ -23,8 +26,15 @@ const PackageSchema = new Schema(
     active: { type: Boolean, default: true },
     api_product_id: { type: String },
     image_url: { type: String },
+    category: { type: String, default: "Normal Top-Up" },
+    badge: { type: String },
+    sort_order: { type: Number, default: 0 },
   },
   { timestamps: true }
 );
 
-export default mongoose.models.Package || mongoose.model<IPackage>("Package", PackageSchema);
+if (mongoose.models.Package) {
+  delete mongoose.models.Package;
+}
+
+export default mongoose.model<IPackage>("Package", PackageSchema);

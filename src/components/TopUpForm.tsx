@@ -21,6 +21,14 @@ interface PackageType {
   diamonds: number;
   popular: boolean;
   image_url?: string;
+  category?: string;
+  badge?: string;
+}
+
+interface CategoryType {
+  id: string;
+  name: string;
+  sort_order: number;
 }
 
 const DiamondSVG = ({ className = "" }: { className?: string }) => (
@@ -186,7 +194,7 @@ const GameDiamond = ({ gameId, amount, isActive, imageUrl, className = "" }: { g
   );
 };
 
-export default function TopUpForm({ gameId, requiresZoneId, packages }: { gameId: string; requiresZoneId: boolean; packages: PackageType[] }) {
+export default function TopUpForm({ gameId, requiresZoneId = false, packages = [], categories = [] }: { gameId: string, requiresZoneId?: boolean, packages?: PackageType[], categories?: CategoryType[] }) {
   const [userId, setUserId] = useState("");
   const [zoneId, setZoneId] = useState("");
   const [isChecking, setIsChecking] = useState(false);
@@ -196,6 +204,57 @@ export default function TopUpForm({ gameId, requiresZoneId, packages }: { gameId
   const [selectedPackage, setSelectedPackage] = useState<string | null>(null);
   const [selectedPayment, setSelectedPayment] = useState<string | null>("aba");
   const [modalState, setModalState] = useState<{ open: boolean, orderId: string, khqrString: string, khqrUrl: string, amount: number } | null>(null);
+
+  // Combine explicitly created categories with any categories already assigned to packages
+  const usedCategories = Array.from(new Set(packages.map(p => p.category || "Normal Top-Up")));
+  const dbCategories = categories || [];
+  
+  const categoryGroups = [
+    ...dbCategories,
+    ...usedCategories
+      .filter(catName => !dbCategories.some(c => c.name === catName))
+      .map((catName, idx) => ({ id: catName, name: catName, sort_order: 999 + idx }))
+  ].sort((a, b) => a.sort_order - b.sort_order);
+
+  const renderPackageCard = (pkg: PackageType) => (
+    <div
+      key={pkg.id}
+      onClick={() => setSelectedPackage(pkg.id)}
+      className={clsx(
+        "relative p-3 rounded-md cursor-pointer transition-all duration-300 border flex flex-col items-center justify-center gap-2 group overflow-hidden text-center",
+        selectedPackage === pkg.id
+          ? "bg-gradient-to-b from-secondary/20 to-secondary/5 border-secondary shadow-[0_4px_20px_rgba(139,92,246,0.3)] scale-[1.02] z-10"
+          : "bg-white/5 border-white/10 hover:border-white/30 hover:bg-white/10 hover:scale-[1.01]"
+      )}
+    >
+      {/* Subtle active background glow */}
+      {selectedPackage === pkg.id && (
+        <div className="absolute inset-0 bg-secondary/10 blur-xl pointer-events-none"></div>
+      )}
+
+      {/* Bonus Tag (Top Right) */}
+      {(pkg.badge || pkg.popular) && (
+        <div className="absolute top-0 right-0 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-bl-md shadow-lg z-20 flex items-center gap-1">
+          <Zap size={8} className="fill-white" /> {pkg.badge || "Hot"}
+        </div>
+      )}
+      
+      {/* Premium Diamond Cluster */}
+      <div className="w-12 h-12 sm:w-14 sm:h-14 shrink-0 flex items-center justify-center relative z-10">
+        <GameDiamond gameId={gameId} amount={pkg.diamonds || pkg.price * 50} isActive={selectedPackage === pkg.id} imageUrl={pkg.image_url} />
+      </div>
+      
+      {/* Price and Name */}
+      <div className="flex flex-col relative z-10 w-full mt-1">
+        <span className="font-black text-base sm:text-lg text-[#FACC15] drop-shadow-md leading-none">
+          ${pkg.price.toFixed(2)}
+        </span>
+        <span className={clsx("font-semibold text-[10px] sm:text-xs mt-1.5 leading-tight", selectedPackage === pkg.id ? "text-white" : "text-gray-300")}>
+          {pkg.name}
+        </span>
+      </div>
+    </div>
+  );
 
   const handleCheckId = async () => {
     if (!userId) return;
@@ -340,51 +399,35 @@ export default function TopUpForm({ gameId, requiresZoneId, packages }: { gameId
             Select Package (កញ្ចប់ទិញ)
           </h2>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-            {packages.length === 0 ? (
-              <div className="col-span-full text-center py-8 text-gray-500">No packages available for this game yet.</div>
-            ) : (
-              packages.map((pkg) => (
-                <div
-                  key={pkg.id}
-                  onClick={() => setSelectedPackage(pkg.id)}
-                  className={clsx(
-                    "relative p-3 sm:p-4 rounded-2xl cursor-pointer transition-all duration-300 border flex flex-row items-center gap-3 sm:gap-4 group overflow-hidden",
-                    selectedPackage === pkg.id
-                      ? "bg-gradient-to-r from-secondary/20 to-secondary/5 border-secondary shadow-[0_4px_20px_rgba(139,92,246,0.3)] scale-[1.02] z-10"
-                      : "bg-white/5 border-white/10 hover:border-white/30 hover:bg-white/10 hover:scale-[1.01]"
-                  )}
-                >
-                  {/* Subtle active background glow */}
-                  {selectedPackage === pkg.id && (
-                    <div className="absolute inset-0 bg-secondary/10 blur-xl pointer-events-none"></div>
-                  )}
-
-                  {/* Bonus Tag (Top Right) */}
-                  {pkg.popular && (
-                    <div className="absolute top-0 right-0 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[10px] sm:text-xs font-bold px-2 py-0.5 rounded-bl-xl shadow-lg z-20 flex items-center gap-1">
-                      <Zap size={10} className="fill-white" /> Popular
+          {packages.length === 0 ? (
+            <div className="text-center py-8 text-gray-500">No packages available for this game yet.</div>
+          ) : (
+            <div className="flex flex-col gap-6">
+              {categoryGroups.map((cat, idx) => {
+                const groupPackages = packages.filter(pkg => (pkg.category || "Normal Top-Up") === cat.name);
+                if (groupPackages.length === 0) return null;
+                
+                const isPass = cat.name.toLowerCase().includes("pass") || cat.name.toLowerCase().includes("deal");
+                const colorClass = isPass ? "bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.6)]" : "bg-primary shadow-[0_0_8px_rgba(139,92,246,0.6)]";
+                
+                return (
+                  <div key={cat.id}>
+                    <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-2">
+                      <div className={clsx("w-2 h-2 rounded-full", colorClass)}></div>
+                      {cat.name}
+                    </h3>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4">
+                      {groupPackages.map(pkg => renderPackageCard(pkg))}
                     </div>
-                  )}
-                  
-                  {/* Premium Diamond Cluster */}
-                  <div className="w-14 h-14 sm:w-16 sm:h-16 shrink-0 flex items-center justify-center relative z-10">
-                    <GameDiamond gameId={gameId} amount={pkg.diamonds || pkg.price * 50} isActive={selectedPackage === pkg.id} imageUrl={pkg.image_url} />
+                    {/* Visual Divider if not the last non-empty group */}
+                    {idx < categoryGroups.length - 1 && (
+                      <div className="w-full h-px bg-white/5 mt-6 mb-2"></div>
+                    )}
                   </div>
-                  
-                  {/* Price and Name */}
-                  <div className="flex flex-col text-left relative z-10 flex-1">
-                    <span className="font-black text-lg sm:text-xl text-[#FACC15] drop-shadow-md">
-                      ${pkg.price.toFixed(2)}
-                    </span>
-                    <span className={clsx("font-bold text-xs sm:text-sm mt-0.5 leading-tight", selectedPackage === pkg.id ? "text-white" : "text-gray-300")}>
-                      {pkg.name}
-                    </span>
-                  </div>
-                </div>
-              ))
-            )}
-          </div>
+                );
+              })}
+            </div>
+          )}
         </div>
 
         {/* Step 3: Select Payment */}

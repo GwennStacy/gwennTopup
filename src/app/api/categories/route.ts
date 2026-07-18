@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import connectToDatabase from "@/lib/mongodb";
-import Package from "@/models/Package";
+import Category from "@/models/Category";
 
 export async function GET(request: Request) {
   try {
@@ -14,10 +14,10 @@ export async function GET(request: Request) {
       query = { game_id: gameId };
     }
 
-    const packages = await Package.find(query).sort({ sort_order: 1, price: 1 });
-    return NextResponse.json(packages);
+    const categories = await Category.find(query).sort({ sort_order: 1 });
+    return NextResponse.json(categories);
   } catch (error) {
-    return NextResponse.json({ error: "Failed to fetch packages" }, { status: 500 });
+    return NextResponse.json({ error: "Failed to fetch categories" }, { status: 500 });
   }
 }
 
@@ -25,9 +25,9 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
     await connectToDatabase();
-    const newPackage = await Package.create(body);
-    return NextResponse.json(newPackage, { status: 201 });
+    const newCategory = await Category.create(body);
+    return NextResponse.json(newCategory, { status: 201 });
   } catch (error: any) {
-    return NextResponse.json({ error: error.message || "Failed to create package" }, { status: 500 });
+    return NextResponse.json({ error: error.message || "Failed to create category" }, { status: 500 });
   }
 }
