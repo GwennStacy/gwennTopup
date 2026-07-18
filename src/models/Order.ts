@@ -1,5 +1,6 @@
 import mongoose, { Schema, Document } from "mongoose";
 import "./Package"; // Ensure Package schema is registered for populate
+import "./Game"; // Ensure Game schema is registered for populate
 
 export interface IOrder extends Document {
   order_id: string;

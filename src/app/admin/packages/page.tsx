@@ -20,6 +20,7 @@ interface Package {
   category?: string;
   badge?: string;
   sort_order?: number;
+  image_url?: string;
 }
 
 interface Category {
