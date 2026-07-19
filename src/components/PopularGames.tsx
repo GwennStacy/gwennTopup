@@ -110,7 +110,7 @@ export default function PopularGames() {
                           src={game.image || "/game-cover.png"}
                           alt={game.name}
                           fill
-                          className="object-cover opacity-80"
+                          className="object-cover"
                           sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 16vw"
                         />
                       </div>
