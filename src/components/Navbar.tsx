@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Gamepad2, Globe, Menu, X, ChevronDown, User, Moon, Sun } from "lucide-react";
+import { Gamepad2, Globe, Menu, X, ChevronDown, User, Moon, Sun, Bell, Send } from "lucide-react";
 import Link from "next/link";
 import clsx from "clsx";
 import Image from "next/image";
@@ -83,7 +83,23 @@ export default function Navbar() {
           <div className="h-6 w-px bg-white/10"></div>
 
           {/* Actions */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
+            <button 
+              className="relative flex items-center justify-center w-8 h-8 rounded-full bg-white/5 border border-white/10 text-gray-300 hover:text-white hover:bg-white/10 transition-all"
+              title="Notifications"
+            >
+              <Bell size={16} />
+              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-orange-500 rounded-full"></span>
+            </button>
+            <Link 
+              href="https://t.me/Siv_kimheng"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center w-8 h-8 rounded-full bg-white/5 border border-[#0088cc]/50 text-[#0088cc] hover:text-white hover:bg-[#0088cc] hover:shadow-[0_0_10px_rgba(0,136,204,0.5)] transition-all"
+              title="Contact on Telegram"
+            >
+              <Send size={14} className="ml-[-1px] mt-[1px]" />
+            </Link>
             <button 
               onClick={toggleTheme}
               className="flex items-center justify-center w-8 h-8 rounded-full bg-white/5 border border-white/10 text-gray-300 hover:text-white hover:bg-white/10 transition-all"
@@ -91,17 +107,25 @@ export default function Navbar() {
             >
               {isDark ? <Sun size={16} /> : <Moon size={16} />}
             </button>
-            <button className="text-sm font-medium text-gray-300 hover:text-white transition-colors">
-              Login
-            </button>
-            <button className="px-4 py-2 rounded-lg bg-primary hover:bg-primary/90 text-white text-sm font-medium transition-all hover:glow-primary">
-              Register
-            </button>
           </div>
         </div>
 
         {/* Mobile Nav Actions */}
-        <div className="flex lg:hidden items-center gap-3">
+        <div className="flex lg:hidden items-center gap-2">
+          <button 
+            className="relative flex items-center justify-center w-8 h-8 rounded-full bg-white/5 border border-white/10 text-gray-300 hover:text-white hover:bg-white/10 transition-all"
+          >
+            <Bell size={16} />
+            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-orange-500 rounded-full"></span>
+          </button>
+          <Link 
+            href="https://t.me/Siv_kimheng"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center w-8 h-8 rounded-full bg-white/5 border border-[#0088cc]/50 text-[#0088cc] hover:text-white hover:bg-[#0088cc] hover:shadow-[0_0_10px_rgba(0,136,204,0.5)] transition-all"
+          >
+            <Send size={14} className="ml-[-1px] mt-[1px]" />
+          </Link>
           <button 
             onClick={toggleTheme}
             className="flex items-center justify-center w-8 h-8 rounded-full bg-white/5 border border-white/10 text-gray-300 hover:text-white hover:bg-white/10 transition-all"

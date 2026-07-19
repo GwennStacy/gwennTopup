@@ -12,8 +12,6 @@ export const metadata: Metadata = {
   description: "Instant delivery, trusted service, best prices. Top up Mobile Legends, Free Fire, PUBG Mobile, and more.",
 };
 
-import FloatingWidgets from "@/components/FloatingWidgets";
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -26,7 +24,6 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         {children}
-        <FloatingWidgets />
         <script src="https://khqr.cc/khqrcc-plugin.js" async></script>
       </body>
     </html>
