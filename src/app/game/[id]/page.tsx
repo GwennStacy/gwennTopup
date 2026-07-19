@@ -101,7 +101,7 @@ export default async function GameTopUpPage({ params }: { params: Promise<{ id: 
                   alt={`${gameName} Icon`}
                   fill
                   sizes="(max-width: 768px) 96px, 160px"
-                  className="object-cover mix-blend-screen"
+                  className="object-cover relative z-10"
                 />
               </div>
             </div>
