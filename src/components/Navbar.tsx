@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Gamepad2, Globe, Menu, X, ChevronDown, User, Moon } from "lucide-react";
+import { Gamepad2, Globe, Menu, X, ChevronDown, User, Moon, Sun } from "lucide-react";
 import Link from "next/link";
 import clsx from "clsx";
 import Image from "next/image";
@@ -18,6 +18,24 @@ const navLinks = [
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isDark, setIsDark] = useState(true);
+
+  useEffect(() => {
+    // Check initial state
+    if (typeof document !== 'undefined') {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'light') {
+        document.documentElement.classList.add('light-mode');
+        setIsDark(false);
+      }
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const isLightMode = document.documentElement.classList.toggle('light-mode');
+    setIsDark(!isLightMode);
+    localStorage.setItem('theme', isLightMode ? 'light' : 'dark');
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -68,14 +86,11 @@ export default function Navbar() {
           {/* Actions */}
           <div className="flex items-center gap-4">
             <button 
-              onClick={() => {
-                const isDark = document.documentElement.classList.toggle('light-mode');
-                // You can add logic to save to localStorage here
-              }}
+              onClick={toggleTheme}
               className="flex items-center justify-center w-8 h-8 rounded-full bg-white/5 border border-white/10 text-gray-300 hover:text-white hover:bg-white/10 transition-all"
-              title="Toggle Dark Mode"
+              title="Toggle Theme"
             >
-              <Moon size={16} />
+              {isDark ? <Sun size={16} /> : <Moon size={16} />}
             </button>
             <button className="text-sm font-medium text-gray-300 hover:text-white transition-colors">
               Login
@@ -118,11 +133,11 @@ export default function Navbar() {
               <div className="h-px w-full bg-white/10 my-2"></div>
               <div className="flex items-center justify-between p-2">
                 <button 
-                  onClick={() => document.documentElement.classList.toggle('light-mode')}
+                  onClick={toggleTheme}
                   className="flex items-center gap-2 text-gray-300 hover:text-white"
                 >
-                  <Moon size={18} />
-                  <span>Theme</span>
+                  {isDark ? <Sun size={18} /> : <Moon size={18} />}
+                  <span>{isDark ? 'Light Mode' : 'Dark Mode'}</span>
                 </button>
                 <div className="flex gap-3">
                   <button className="px-4 py-2 text-sm font-medium text-gray-300">Login</button>
