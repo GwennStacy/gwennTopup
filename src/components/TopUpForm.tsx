@@ -141,7 +141,7 @@ const GameDiamond = ({ gameId, amount, isActive, imageUrl, className = "" }: { g
     return (
       <div className={clsx("relative flex items-center justify-center h-full w-full", className)}>
         <div className={clsx("absolute inset-0 bg-blue-500/20 blur-xl rounded-full transition-opacity duration-300", isActive ? "opacity-100" : "opacity-0")}></div>
-        <img src={imageUrl} alt="Package Image" className="w-full h-full object-contain relative z-10 drop-shadow-[0_8px_16px_rgba(0,0,0,0.6)] transition-transform duration-300 group-hover:scale-110" />
+        <img src={imageUrl} alt="Package Image" className="absolute inset-0 w-full h-full object-contain z-10 drop-shadow-[0_8px_16px_rgba(0,0,0,0.6)] transition-transform duration-300 group-hover:scale-110" />
       </div>
     );
   }
@@ -152,7 +152,7 @@ const GameDiamond = ({ gameId, amount, isActive, imageUrl, className = "" }: { g
                DiamondSVG; // Default (MLBB etc)
                
   return (
-    <div className={clsx("relative flex items-center justify-center h-16 w-full", className)}>
+    <div className={clsx("relative flex items-center justify-center h-full w-full", className)}>
       {/* Background glow that only shows when active */}
       <div className={clsx("absolute inset-0 blur-2xl rounded-full transition-opacity duration-300", 
         isActive ? "opacity-100" : "opacity-0 group-hover:opacity-40",
@@ -194,7 +194,7 @@ const GameDiamond = ({ gameId, amount, isActive, imageUrl, className = "" }: { g
   );
 };
 
-export default function TopUpForm({ gameId, requiresZoneId = false, packages = [], categories = [] }: { gameId: string, requiresZoneId?: boolean, packages?: PackageType[], categories?: CategoryType[] }) {
+export default function TopUpForm({ gameId, gameApiId, requiresZoneId = false, packages = [], categories = [] }: { gameId: string, gameApiId?: string, requiresZoneId?: boolean, packages?: PackageType[], categories?: CategoryType[] }) {
   const [userId, setUserId] = useState("");
   const [zoneId, setZoneId] = useState("");
   const [isChecking, setIsChecking] = useState(false);
@@ -221,7 +221,7 @@ export default function TopUpForm({ gameId, requiresZoneId = false, packages = [
       key={pkg.id}
       onClick={() => setSelectedPackage(pkg.id)}
       className={clsx(
-        "relative p-2 sm:p-3 rounded-xl cursor-pointer transition-all duration-300 border flex flex-col items-center justify-center gap-1.5 sm:gap-2 group overflow-hidden text-center",
+        "relative p-2 sm:p-3 rounded-xl cursor-pointer transition-all duration-300 border flex flex-col items-center justify-start gap-1.5 sm:gap-2 group overflow-hidden text-center",
         selectedPackage === pkg.id
           ? "bg-gradient-to-b from-secondary/20 to-secondary/5 border-secondary shadow-[0_4px_20px_rgba(139,92,246,0.3)] scale-[1.02] z-10"
           : "bg-white/5 border-white/10 hover:border-white/30 hover:bg-white/10 hover:scale-[1.01]"
@@ -240,7 +240,7 @@ export default function TopUpForm({ gameId, requiresZoneId = false, packages = [
       )}
       
       {/* Premium Diamond Cluster */}
-      <div className="w-10 h-10 sm:w-14 sm:h-14 shrink-0 flex items-center justify-center relative z-10">
+      <div className="w-full h-16 sm:h-20 shrink-0 flex items-center justify-center relative z-10 px-2 mt-2">
         <GameDiamond gameId={gameId} amount={pkg.diamonds || pkg.price * 50} isActive={selectedPackage === pkg.id} imageUrl={pkg.image_url} />
       </div>
       
@@ -269,7 +269,7 @@ export default function TopUpForm({ gameId, requiresZoneId = false, packages = [
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          gameId: gameId,
+          gameId: gameApiId || gameId,
           userId: userId,
           zoneId: zoneId || undefined,
         }),

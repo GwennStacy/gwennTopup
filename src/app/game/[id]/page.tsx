@@ -7,6 +7,7 @@ import { Gamepad2 } from "lucide-react";
 import connectToDatabase from "@/lib/mongodb";
 import mongoose from "mongoose";
 import Game from "@/models/Game";
+import { games as gamesConfig } from "@/lib/games";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -20,13 +21,14 @@ export default async function GameTopUpPage({ params }: { params: Promise<{ id: 
 
   let gameData = null;
   if (dbGame) {
+    const configGame = gamesConfig.find((g) => g.id === dbGame.id_string);
     gameData = {
       id: dbGame.id_string,
       name: dbGame.name,
       publisher: dbGame.publisher,
       image: dbGame.image_url || "/game/default.jpg",
       requiresZoneId: dbGame.requires_zone_id,
-      g2bulkCode: dbGame.id_string
+      g2bulkCode: configGame ? configGame.g2bulkCode : dbGame.id_string
     };
   }
 
@@ -124,7 +126,7 @@ export default async function GameTopUpPage({ params }: { params: Promise<{ id: 
 
       {/* Top Up Form Section */}
       <div className="container mx-auto px-4 md:px-6 lg:px-8 py-6 md:py-12">
-        <TopUpForm gameId={gameApiId} requiresZoneId={gameData.requiresZoneId} packages={packages} categories={categories} />
+        <TopUpForm gameId={gameData.id} gameApiId={gameApiId} requiresZoneId={gameData.requiresZoneId} packages={packages} categories={categories} />
       </div>
 
       <Footer />
