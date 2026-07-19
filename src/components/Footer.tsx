@@ -11,8 +11,11 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           {/* Company Info */}
           <div className="space-y-4">
-            <Link href="/" className="flex items-start group mb-6">
-              <div className="relative w-24 h-24 md:w-32 md:h-32 transition-transform duration-300 hover:scale-105 -ml-2">
+            <Link href="/" className="flex items-center group mb-6 gap-3">
+              <span className="text-lg md:text-xl font-black tracking-widest text-white uppercase">
+                Gwenn<span className="text-gradient">Topup</span>
+              </span>
+              <div className="relative w-20 h-20 md:w-28 md:h-28 transition-transform duration-300 hover:scale-105">
                 <Image src="/gwenn-logo-tr.png" alt="Gwenn Topup" fill className="object-contain" priority />
               </div>
             </Link>
