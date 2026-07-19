@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Gamepad2, Globe, Menu, X, ChevronDown, User } from "lucide-react";
+import { Gamepad2, Globe, Menu, X, ChevronDown, User, Moon } from "lucide-react";
 import Link from "next/link";
 import clsx from "clsx";
 import Image from "next/image";
@@ -67,10 +67,15 @@ export default function Navbar() {
 
           {/* Actions */}
           <div className="flex items-center gap-4">
-            <button className="flex items-center gap-1 text-sm text-gray-300 hover:text-white transition-colors">
-              <Globe size={16} />
-              <span>EN</span>
-              <ChevronDown size={14} />
+            <button 
+              onClick={() => {
+                const isDark = document.documentElement.classList.toggle('light-mode');
+                // You can add logic to save to localStorage here
+              }}
+              className="flex items-center justify-center w-8 h-8 rounded-full bg-white/5 border border-white/10 text-gray-300 hover:text-white hover:bg-white/10 transition-all"
+              title="Toggle Dark Mode"
+            >
+              <Moon size={16} />
             </button>
             <button className="text-sm font-medium text-gray-300 hover:text-white transition-colors">
               Login
@@ -112,8 +117,12 @@ export default function Navbar() {
               ))}
               <div className="h-px w-full bg-white/10 my-2"></div>
               <div className="flex items-center justify-between p-2">
-                <button className="flex items-center gap-2 text-gray-300">
-                  <Globe size={18} /> EN
+                <button 
+                  onClick={() => document.documentElement.classList.toggle('light-mode')}
+                  className="flex items-center gap-2 text-gray-300 hover:text-white"
+                >
+                  <Moon size={18} />
+                  <span>Theme</span>
                 </button>
                 <div className="flex gap-3">
                   <button className="px-4 py-2 text-sm font-medium text-gray-300">Login</button>
