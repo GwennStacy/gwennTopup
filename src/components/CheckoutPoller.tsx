@@ -35,14 +35,15 @@ export default function CheckoutPoller({ orderId, khqrString, khqrUrl, amount, o
 
   // Auto-redirect to ABA Mobile App on mobile devices when QR is ready
   useEffect(() => {
-    if (typeof window !== 'undefined' && (khqrString || khqrUrl)) {
+    if (typeof window !== 'undefined' && khqrString) {
       const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
       if (isMobile) {
-        // Automatically open the ABA app
-        window.location.href = "abamobilebank://ababank.com?type=payway&qr=https://link.payway.com.kh/ABAPAY0D482570t";
+        // Automatically open the ABA app with dynamic KHQR string
+        const abaDeepLink = `abamobilebank://ababank.com?type=khqr&qr=${encodeURIComponent(khqrString)}`;
+        window.location.href = abaDeepLink;
       }
     }
-  }, [khqrString, khqrUrl]);
+  }, [khqrString]);
 
   if (orderStatus === "success") {
     return (
@@ -190,7 +191,7 @@ export default function CheckoutPoller({ orderId, khqrString, khqrUrl, amount, o
             </p>
             
             <a 
-              href="abamobilebank://ababank.com?type=payway&qr=https://link.payway.com.kh/ABAPAY0D482570t"
+              href={`abamobilebank://ababank.com?type=khqr&qr=${encodeURIComponent(khqrString)}`}
               className="mt-6 w-full py-3.5 bg-[#005a70] hover:bg-[#00475a] text-white rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg shadow-[#005a70]/30 transition-all sm:hidden"
             >
               <span className="bg-[#e42528] px-2 py-0.5 rounded text-[10px] tracking-wider">ABA</span>
