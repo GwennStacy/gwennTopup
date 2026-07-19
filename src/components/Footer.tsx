@@ -12,12 +12,12 @@ export default function Footer() {
           {/* Company Info */}
           <div className="space-y-4">
             <Link href="/" className="flex items-center group mb-6 gap-3">
-              <span className="text-lg md:text-xl font-black tracking-widest text-white uppercase">
-                Gwenn<span className="text-gradient">Topup</span>
-              </span>
               <div className="relative w-20 h-20 md:w-28 md:h-28 transition-transform duration-300 hover:scale-105">
                 <Image src="/gwenn-logo-tr.png" alt="Gwenn Topup" fill className="object-contain" priority />
               </div>
+              <span className="text-lg md:text-xl font-black tracking-widest text-white uppercase">
+                Gwenn<span className="text-gradient">Topup</span>
+              </span>
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed">
               The fastest and most secure game top-up platform. Instant delivery, trusted by thousands of gamers worldwide. Level up your gaming experience today.
