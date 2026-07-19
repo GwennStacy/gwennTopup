@@ -120,73 +120,45 @@ export default function CheckoutPoller({ orderId, khqrString, khqrUrl, amount, o
         </div>
       </div>
 
-      {/* Ticket Container */}
-      <div className="w-full px-6 mt-6">
-        <div className="bg-white w-full rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.08)] relative border border-gray-100">
-          
-          {/* Top Red Bar */}
-          <div className="bg-[#E52D27] h-[60px] w-full flex items-center justify-center relative overflow-hidden">
-            {/* Custom KHQR Logo text styling */}
-            <div className="flex items-center gap-[2px]">
-              <span className="text-white font-black text-xl tracking-widest">KH</span>
-              <span className="text-white font-medium text-xl tracking-wide">QR</span>
-              <div className="w-3.5 h-3.5 bg-white rounded-tl-full rounded-tr-sm rounded-br-full rounded-bl-sm -ml-1 mt-1 opacity-90 rotate-45"></div>
-            </div>
-            {/* Diagonal cut on bottom right */}
-            <div className="absolute -bottom-6 -right-6 w-12 h-12 bg-white rotate-45"></div>
-          </div>
-
-          {/* Ticket Body */}
-          <div className="pt-5 pb-0 px-6 flex flex-col items-center">
-            <p className="text-[12px] text-gray-500 font-medium tracking-wide mb-1">Gwennn Shop</p>
-            <div className="flex items-baseline gap-1.5">
-              <span className="text-[26px] font-extrabold text-gray-900 leading-none">{amount.toFixed(2)}</span>
-              <span className="text-[14px] font-bold text-gray-500">USD</span>
-            </div>
-          </div>
-
-          {/* Dashed Separator */}
-          <div className="w-full px-6 my-5">
-            <div className="w-full border-t-[2px] border-dashed border-gray-200"></div>
-          </div>
-
-          {/* QR Code Area */}
-          <div className="flex flex-col items-center justify-center px-6 pb-6">
-            {(khqrString || khqrUrl) ? (
-              <div className="relative">
-                {khqrUrl ? (
-                  <img src={khqrUrl} alt="KHQR" className="w-[180px] h-[180px] object-contain" />
-                ) : (
-                  <div className="relative">
-                    <QRCode value={khqrString} size={180} level="M" />
-                    {/* Dollar Sign Overlay inside QR */}
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-9 h-9 bg-white rounded-full flex items-center justify-center">
-                      <div className="w-[26px] h-[26px] bg-black rounded-full flex items-center justify-center text-white font-bold text-sm">
-                        $
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-            ) : (
-              <div className="w-[180px] h-[180px] bg-gray-50 flex items-center justify-center rounded-xl">
-                <Loader2 className="animate-spin w-6 h-6 text-gray-400" />
-              </div>
-            )}
-            
-            <p className="text-[11px] text-gray-400 text-center mt-5 max-w-[180px] leading-relaxed font-medium">
-              Scan with ABA Mobile, or other Mobile Banking App supporting KHQR
-            </p>
-            
-            <a 
-              href="abamobilebank://ababank.com?type=payway&qr=https://link.payway.com.kh/ABAPAY0D482570t"
-              className="mt-6 w-full py-3.5 bg-[#005a70] hover:bg-[#00475a] text-white rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg shadow-[#005a70]/30 transition-all sm:hidden"
-            >
-              <span className="bg-[#e42528] px-2 py-0.5 rounded text-[10px] tracking-wider">ABA</span>
-              Open in ABA Mobile
-            </a>
+      <div className="w-full px-6 mt-4 flex flex-col items-center">
+        
+        {/* Simple Price Header */}
+        <div className="mb-6 text-center">
+          <p className="text-gray-500 text-sm font-medium mb-1">Total Payment</p>
+          <div className="flex items-baseline justify-center gap-1.5">
+            <span className="text-3xl font-extrabold text-gray-900">{amount.toFixed(2)}</span>
+            <span className="text-base font-bold text-gray-500">USD</span>
           </div>
         </div>
+
+        {/* Minimal QR Code Area */}
+        <div className="flex flex-col items-center justify-center p-4 bg-white rounded-2xl shadow-sm border border-gray-100">
+          {(khqrString || khqrUrl) ? (
+            <div className="relative flex justify-center items-center">
+              {khqrUrl ? (
+                <img src={khqrUrl} alt="KHQR" className="w-[200px] h-[200px] object-contain" />
+              ) : (
+                <QRCode value={khqrString} size={200} level="M" />
+              )}
+            </div>
+          ) : (
+            <div className="w-[200px] h-[200px] bg-gray-50 flex items-center justify-center rounded-xl">
+              <Loader2 className="animate-spin w-8 h-8 text-gray-400" />
+            </div>
+          )}
+        </div>
+        
+        <p className="text-xs text-gray-400 text-center mt-4 max-w-[200px] leading-relaxed">
+          Scan with any Mobile Banking App supporting KHQR
+        </p>
+        
+        <a 
+          href="abamobilebank://ababank.com?type=payway&qr=https://link.payway.com.kh/ABAPAY0D482570t"
+          className="mt-6 w-full py-3.5 bg-[#005a70] hover:bg-[#00475a] text-white rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg shadow-[#005a70]/30 transition-all sm:hidden"
+        >
+          <span className="bg-[#e42528] px-2 py-0.5 rounded text-[10px] tracking-wider">ABA</span>
+          Open in ABA Mobile
+        </a>
       </div>
     </div>
   );
