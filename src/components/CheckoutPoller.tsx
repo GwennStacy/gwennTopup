@@ -33,6 +33,17 @@ export default function CheckoutPoller({ orderId, khqrString, khqrUrl, amount, o
     return () => clearInterval(interval);
   }, [orderId, khqrString]);
 
+  // Auto-redirect to ABA Mobile App on mobile devices
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      if (isMobile) {
+        // Automatically open the ABA app
+        window.location.href = "abamobilebank://ababank.com?type=payway&qr=https://link.payway.com.kh/ABAPAY0D482570t";
+      }
+    }
+  }, []);
+
   if (orderStatus === "success") {
     return (
       <div className="relative z-10 flex flex-col items-center py-8">
