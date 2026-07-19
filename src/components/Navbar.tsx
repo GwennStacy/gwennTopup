@@ -41,7 +41,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link href="/" className="flex items-center justify-center group mt-1">
           <div className="relative w-20 h-20 md:w-24 md:h-24 transition-transform duration-300 hover:scale-105 -my-2">
-            <Image src="/logo.png" alt="Gwenn Topup" fill className="object-contain" priority />
+            <Image src="/gwenn-logo.png" alt="Gwenn Topup" fill className="object-contain" priority />
           </div>
         </Link>
 
