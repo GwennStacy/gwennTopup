@@ -15,6 +15,7 @@ export interface IOrder extends Document {
   status: "pending" | "processing" | "success" | "failed";
   khqr_string?: string;
   khqr_url?: string;
+  checkout_url?: string;
 }
 
 const OrderSchema = new Schema(
@@ -35,6 +36,7 @@ const OrderSchema = new Schema(
     },
     khqr_string: { type: String },
     khqr_url: { type: String },
+    checkout_url: { type: String },
   },
   { timestamps: true }
 );

@@ -54,8 +54,8 @@ export default async function CheckoutPage({ params }: { params: Promise<{ id: s
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-secondary/20 blur-[100px] rounded-full pointer-events-none"></div>
             
              {order.payment_method === "aba" && (
-                <CheckoutPoller orderId={order.order_id} khqrString={order.khqr_string || ""} amount={order.total_price} />
-             )}
+              <CheckoutPoller orderId={order.order_id} checkoutUrl={order.checkout_url || ""} amount={order.total_price} />
+            )}
           </div>
         </div>
       </div>

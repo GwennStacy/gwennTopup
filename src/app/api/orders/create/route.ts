@@ -89,6 +89,7 @@ export async function POST(req: Request) {
       status: "pending",
       khqr_string: "",
       khqr_url: "",
+      checkout_url: checkout_url,
     });
     
     await newOrder.save();
