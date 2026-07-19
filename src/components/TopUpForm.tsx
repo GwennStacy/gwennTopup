@@ -203,7 +203,8 @@ export default function TopUpForm({ gameId, gameApiId, requiresZoneId = false, p
 
   const [selectedPackage, setSelectedPackage] = useState<string | null>(null);
   const [selectedPayment, setSelectedPayment] = useState<string | null>("aba");
-  const [modalState, setModalState] = useState<{ open: boolean, orderId: string, khqrString: string, khqrUrl: string, amount: number } | null>(null);
+  
+  const [orderResult, setOrderResult] = useState<{ orderId: string, khqrString: string, khqrUrl: string, amount: number } | null>(null);
 
   // Combine explicitly created categories with any categories already assigned to packages
   const usedCategories = Array.from(new Set(packages.map(p => p.category || "Normal Top-Up")));
@@ -312,8 +313,13 @@ export default function TopUpForm({ gameId, gameApiId, requiresZoneId = false, p
       const data = await response.json();
       
       if (response.ok && data.success) {
-        // Open QR modal instead of redirecting
-        setModalState({ open: true, orderId: data.order_id, khqrString: data.khqr_string, khqrUrl: data.khqr_url, amount: data.total_price });
+        if (data.checkout_url) {
+          setOrderResult({
+            orderId: data.order_id,
+            checkoutUrl: data.checkout_url,
+            amount: selectedPkgData?.price || 0
+          } as any);
+        }
         setIsSubmitting(false);
       } else {
         alert(data.error || "Failed to create order. Please try again.");
@@ -524,28 +530,17 @@ export default function TopUpForm({ gameId, gameApiId, requiresZoneId = false, p
         </button>
       </div>
 
-      {/* Payment QR Modal */}
-      {modalState?.open && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-          <div className="bg-[#090B12] rounded-3xl p-10 w-full max-w-md relative border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] overflow-hidden">
-            <button 
-              onClick={() => setModalState(null)} 
-              className="absolute top-6 right-6 text-gray-500 hover:text-white bg-white/5 hover:bg-white/10 p-2 rounded-full transition-all z-20"
-            >
-              <X size={20} />
-            </button>
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-secondary/10 blur-[100px] rounded-full pointer-events-none"></div>
-            
-            <CheckoutPoller 
-              orderId={modalState.orderId} 
-              khqrString={modalState.khqrString} 
-              khqrUrl={modalState.khqrUrl}
-              amount={modalState.amount} 
-              onClose={() => setModalState(null)}
-            />
-          </div>
+      {orderResult && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-md animate-in fade-in duration-300">
+          <CheckoutPoller
+            orderId={orderResult.orderId}
+            checkoutUrl={(orderResult as any).checkoutUrl}
+            amount={orderResult.amount}
+            onClose={() => { setOrderResult(null); window.location.reload(); }}
+          />
         </div>
       )}
+
     </div>
   );
 };

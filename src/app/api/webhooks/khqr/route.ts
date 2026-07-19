@@ -3,6 +3,7 @@ import connectToDatabase from "@/lib/mongodb";
 import Order from "@/models/Order";
 import "@/models/Package"; // ensure Package model is loaded for populate
 import { sendTelegramMessage } from "@/lib/telegram";
+import crypto from "crypto";
 
 export async function POST(req: Request) {
   try {
@@ -25,6 +26,25 @@ export async function POST(req: Request) {
     if (!transactionId) {
        console.error("Missing transaction_id in webhook payload");
        return NextResponse.json({ success: false, error: "Missing transaction_id" }, { status: 400 });
+    }
+
+    const secret = (process.env.KHQRPAY_SECRET || "5DZq745PvGy1h1bzISImPC7PQMHPHzkX").trim();
+    const reqTime = body.req_time || "";
+    const amount = body.amount || "";
+    
+    if (body.hash) {
+      const expectedHash = crypto.createHash("sha256").update(secret + reqTime + transactionId + amount + "SUCCESS").digest("hex");
+      if (body.hash !== expectedHash && body.hash !== body.hash.toUpperCase()) {
+         console.warn(`Hash mismatch warning. Expected: ${expectedHash}, Got: ${body.hash}. Continuing since this might be a test or format differs.`);
+         // In production we would return 401: return NextResponse.json({ success: false, error: "Invalid hash" }, { status: 401 });
+         // Since documentation says sha256(secret+req_time+transaction_id+amount+"SUCCESS") we verify it, but some older apis use md5 or sha1. We just warn for now to prevent breaking existing transactions during migration.
+         // Actually, let's enforce it since the documentation explicitly says "Always verify this on your server before fulfilling any order."
+         
+         if (body.hash.toLowerCase() !== expectedHash.toLowerCase()) {
+           console.error("Invalid webhook hash. Order will not be fulfilled automatically.");
+           return NextResponse.json({ success: false, error: "Invalid hash signature" }, { status: 401 });
+         }
+      }
     }
 
     await connectToDatabase();

@@ -7,25 +7,25 @@ async function run() {
   const webhook_url = 'http://localhost:3000/api/webhooks/khqr';
   const remark = 'Topup Mobile Legends - 322485725 (3625)';
   
-  const khqrApiUrl = `https://khqr.cc/api/${profile}/payment-gateway/v1/payments/qr-api-khqrcc`;
+  const khqrApiUrl = `https://khqr.cc/api/${profile}/payment-gateway/v1/payments/qr-api`;
   const hashString = secret + orderId + amount + webhook_url + remark;
   const hash = crypto.createHash('sha1').update(hashString).digest('hex');
 
-  const params = new URLSearchParams({
+  const params = {
     transaction_id: orderId,
     amount: amount,
     success_url: webhook_url,
     remark: remark,
     hash: hash
-  });
+  };
 
   const response = await fetch(khqrApiUrl, {
     method: 'POST',
     headers: { 
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'User-Agent': 'Mozilla/5.0'
+      'Content-Type': 'application/json',
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
     },
-    body: params.toString(),
+    body: JSON.stringify(params),
   });
 
   const text = await response.text();
