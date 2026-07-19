@@ -11,13 +11,10 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           {/* Company Info */}
           <div className="space-y-4">
-            <Link href="/" className="flex flex-col items-start group mb-6 gap-1">
-              <div className="relative w-12 h-12 md:w-16 md:h-16 rounded-full overflow-hidden border-2 border-primary/30 group-hover:border-primary group-hover:shadow-[0_0_15px_rgba(139,92,246,0.5)] transition-all duration-300">
-                <Image src="/logo.png" alt="Gwenn Topup" fill className="object-cover" />
+            <Link href="/" className="flex items-start group mb-6">
+              <div className="relative w-24 h-24 md:w-32 md:h-32 transition-transform duration-300 hover:scale-105 -ml-2">
+                <Image src="/logo.png" alt="Gwenn Topup" fill className="object-contain" priority />
               </div>
-              <span className="text-xs md:text-sm font-bold tracking-wider text-white uppercase">
-                Gwenn<span className="text-gradient">Topup</span>
-              </span>
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed">
               The fastest and most secure game top-up platform. Instant delivery, trusted by thousands of gamers worldwide. Level up your gaming experience today.

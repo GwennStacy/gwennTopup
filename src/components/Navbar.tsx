@@ -39,13 +39,10 @@ export default function Navbar() {
     >
       <div className="container mx-auto px-4 md:px-6 lg:px-8 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex flex-col items-center justify-center group gap-0.5 mt-1">
-          <div className="relative w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden border-2 border-primary/30 group-hover:border-primary group-hover:shadow-[0_0_15px_rgba(139,92,246,0.5)] transition-all duration-300">
-            <Image src="/logo.png" alt="Gwenn Topup" fill className="object-cover" />
+        <Link href="/" className="flex items-center justify-center group mt-1">
+          <div className="relative w-20 h-20 md:w-24 md:h-24 transition-transform duration-300 hover:scale-105 -my-2">
+            <Image src="/logo.png" alt="Gwenn Topup" fill className="object-contain" priority />
           </div>
-          <span className="text-[10px] md:text-xs font-bold tracking-wider text-white uppercase">
-            Gwenn<span className="text-gradient">Topup</span>
-          </span>
         </Link>
 
         {/* Desktop Nav */}
