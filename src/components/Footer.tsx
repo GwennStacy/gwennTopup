@@ -13,7 +13,7 @@ export default function Footer() {
           <div className="space-y-4">
             <Link href="/" className="flex items-start group mb-6">
               <div className="relative w-24 h-24 md:w-32 md:h-32 transition-transform duration-300 hover:scale-105 -ml-2">
-                <Image src="/logo.png?v=2" alt="Gwenn Topup" fill className="object-contain" priority />
+                <Image src="/logo.png" alt="Gwenn Topup" fill className="object-contain" priority />
               </div>
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed">
