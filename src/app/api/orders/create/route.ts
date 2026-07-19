@@ -45,7 +45,7 @@ export async function POST(req: Request) {
       const secret = (process.env.KHQRPAY_SECRET || "HxqNvcunZfcVIYv3vILmnUv4uavRbCsQ").trim();
       const profile = (process.env.KHQRPAY_PROFILE || "GxEKDibOpEQnSCb6xZLac240pAk0RrYr").trim();
       
-      const khqrApiUrl = `https://khqr.cc/api/${profile}/payment-gateway/v1/payments/qr-api-khqrcc`;
+      const khqrApiUrl = `https://khqr.cc/api/${profile}/payment-gateway/v1/payments/qr-api`;
 
       const amount = pkg.price.toFixed(2);
       // Remove any non-alphanumeric characters from remark to prevent hash mismatches
