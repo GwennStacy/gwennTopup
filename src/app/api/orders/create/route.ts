@@ -42,8 +42,8 @@ export async function POST(req: Request) {
       const host = req.headers.get("host") || "localhost:3000";
       const webhook_url = `${protocol}://${host}/api/webhooks/khqr`;
       
-      const secret = (process.env.KHQRPAY_SECRET || "HxqNvcunZfcVIYv3vILmnUv4uavRbCsQ").trim();
-      const profile = (process.env.KHQRPAY_PROFILE || "GxEKDibOpEQnSCb6xZLac240pAk0RrYr").trim();
+      const secret = (process.env.KHQRPAY_SECRET || "5DZq745PvGy1h1bzISImPC7PQMHPHzkX").trim();
+      const profile = (process.env.KHQRPAY_PROFILE || "5naBW0cACcdMewjeavsGmbvR9Fvv0PAz").trim();
       
       const khqrApiUrl = `https://khqr.cc/api/${profile}/payment-gateway/v1/payments/qr-api`;
 

@@ -22,8 +22,8 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
 
     // Check with KhqrPay
     if (order.payment_method === "aba") {
-      const secret = process.env.KHQRPAY_SECRET || "HxqNvcunZfcVIYv3vILmnUv4uavRbCsQ";
-      const profile = process.env.KHQRPAY_PROFILE || "GxEKDibOpEQnSCb6xZLac240pAk0RrYr";
+      const secret = process.env.KHQRPAY_SECRET || "5DZq745PvGy1h1bzISImPC7PQMHPHzkX";
+      const profile = process.env.KHQRPAY_PROFILE || "5naBW0cACcdMewjeavsGmbvR9Fvv0PAz";
       const checkUrl = `https://khqr.cc/api/${profile}/payment-gateway/v1/payments/check-transv2-khqrcc`;
 
       const hash = crypto.createHash("sha1").update(secret + orderId).digest("hex");
