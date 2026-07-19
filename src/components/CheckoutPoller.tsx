@@ -177,6 +177,14 @@ export default function CheckoutPoller({ orderId, khqrString, khqrUrl, amount, o
             <p className="text-[11px] text-gray-400 text-center mt-5 max-w-[180px] leading-relaxed font-medium">
               Scan with ABA Mobile, or other Mobile Banking App supporting KHQR
             </p>
+            
+            <a 
+              href="abamobilebank://ababank.com?type=payway&qr=https://link.payway.com.kh/ABAPAY0D482570t"
+              className="mt-6 w-full py-3.5 bg-[#005a70] hover:bg-[#00475a] text-white rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg shadow-[#005a70]/30 transition-all sm:hidden"
+            >
+              <span className="bg-[#e42528] px-2 py-0.5 rounded text-[10px] tracking-wider">ABA</span>
+              Open in ABA Mobile
+            </a>
           </div>
         </div>
       </div>
