@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Gamepad2, Globe, Menu, X, ChevronDown, User, Moon, Sun } from "lucide-react";
 import Link from "next/link";
 import clsx from "clsx";
@@ -17,7 +17,6 @@ const navLinks = [
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isDark, setIsDark] = useState(true);
 
   useEffect(() => {
@@ -101,53 +100,17 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Mobile Toggle */}
-        <button
-          className="lg:hidden text-gray-300 hover:text-white p-2"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        >
-          {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-      </div>
-
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden glass border-t border-white/5 mt-3"
+        {/* Mobile Nav Actions */}
+        <div className="flex lg:hidden items-center gap-3">
+          <button 
+            onClick={toggleTheme}
+            className="flex items-center justify-center w-8 h-8 rounded-full bg-white/5 border border-white/10 text-gray-300 hover:text-white hover:bg-white/10 transition-all"
+            title="Toggle Theme"
           >
-            <div className="flex flex-col p-4 space-y-4">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  className="text-gray-300 hover:text-white font-medium p-2 rounded-lg hover:bg-white/5"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {link.name}
-                </Link>
-              ))}
-              <div className="h-px w-full bg-white/10 my-2"></div>
-              <div className="flex items-center justify-between p-2">
-                <button 
-                  onClick={toggleTheme}
-                  className="flex items-center gap-2 text-gray-300 hover:text-white"
-                >
-                  {isDark ? <Sun size={18} /> : <Moon size={18} />}
-                  <span>{isDark ? 'Light Mode' : 'Dark Mode'}</span>
-                </button>
-                <div className="flex gap-3">
-                  <button className="px-4 py-2 text-sm font-medium text-gray-300">Login</button>
-                  <button className="px-4 py-2 rounded-lg bg-primary text-white text-sm font-medium">Register</button>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            {isDark ? <Sun size={16} /> : <Moon size={16} />}
+          </button>
+        </div>
+      </div>
     </motion.nav>
   );
 }
