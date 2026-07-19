@@ -6,7 +6,7 @@ import { Mail, Phone, MapPin, Gamepad2, Globe, MessageCircle, MonitorPlay, Share
 
 export default function Footer() {
   return (
-    <footer className="bg-black/20 pt-16 pb-8 border-t border-white/5 mt-20">
+    <footer id="footer" className="bg-black/20 pt-16 pb-8 border-t border-white/5 mt-20">
       <div className="container mx-auto px-4 md:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           {/* Company Info */}
@@ -39,7 +39,7 @@ export default function Footer() {
           <div>
             <h3 className="text-white font-semibold text-lg mb-6">Quick Links</h3>
             <ul className="space-y-3">
-              {["Home", "Games", "Promotions", "About Us", "Contact", "Terms of Service", "Privacy Policy"].map((link) => (
+              {["Home", "Games", "About Us", "Contact", "Terms of Service", "Privacy Policy"].map((link) => (
                 <li key={link}>
                   <Link
                     href="#"
