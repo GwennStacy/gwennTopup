@@ -59,15 +59,15 @@ export default function Footer() {
             <ul className="space-y-4">
               <li className="flex items-start gap-3 text-gray-400 text-sm">
                 <MapPin size={18} className="text-primary shrink-0 mt-0.5" />
-                <span>123 Gaming Street, Cyber City, Digital World 90210</span>
+                <span>Sangkat Boeng Kak Ti Pir, Phnom Penh</span>
               </li>
               <li className="flex items-center gap-3 text-gray-400 text-sm">
                 <Phone size={18} className="text-primary shrink-0" />
-                <span>+1 (234) 567-8900</span>
+                <span>855 974957705</span>
               </li>
               <li className="flex items-center gap-3 text-gray-400 text-sm">
                 <Mail size={18} className="text-primary shrink-0" />
-                <span>support@gwenntopup.com</span>
+                <span>GwennTopup9@gmail.com</span>
               </li>
             </ul>
           </div>
@@ -101,14 +101,14 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} GwennTopup. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
-             {/* Payment Logos Placeholder */}
-             <div className="text-gray-500 text-sm font-medium">Supported Payments: </div>
-             <div className="flex gap-2 opacity-50">
-                <div className="h-6 w-10 bg-white/20 rounded"></div>
-                <div className="h-6 w-10 bg-white/20 rounded"></div>
-                <div className="h-6 w-10 bg-white/20 rounded"></div>
-                <div className="h-6 w-10 bg-white/20 rounded"></div>
-             </div>
+            {/* Payment Logos Placeholder */}
+            <div className="text-gray-500 text-sm font-medium">Supported Payments: </div>
+            <div className="flex gap-2 opacity-50">
+              <div className="h-6 w-10 bg-white/20 rounded"></div>
+              <div className="h-6 w-10 bg-white/20 rounded"></div>
+              <div className="h-6 w-10 bg-white/20 rounded"></div>
+              <div className="h-6 w-10 bg-white/20 rounded"></div>
+            </div>
           </div>
         </div>
       </div>

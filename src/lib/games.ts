@@ -48,4 +48,12 @@ export const games: GameConfig[] = [
     requiresZoneId: true,
     g2bulkCode: "magic_chess_gogo",
   },
+  {
+    id: "valorant",
+    name: "Valorant",
+    publisher: "Riot Games",
+    image: "/game/valorant.png",
+    requiresZoneId: false,
+    g2bulkCode: "valorant",
+  },
 ];
