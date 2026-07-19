@@ -90,11 +90,11 @@ export default function CheckoutPoller({ orderId, checkoutUrl, amount, onClose }
   }
 
   return (
-    <div className="flex flex-col w-full max-w-[420px] mx-auto bg-white rounded-3xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.8)] relative animate-in zoom-in-95 duration-300 h-[680px]">
+    <div className="flex flex-col w-full max-w-[320px] sm:max-w-[420px] mx-auto bg-white rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.8)] relative animate-in zoom-in-95 duration-300 h-[540px] sm:h-[680px]">
       
       {/* Header */}
-      <div className="flex justify-between items-center w-full px-5 py-4 border-b border-gray-100 bg-white relative z-20 shrink-0">
-        <h2 className="text-gray-800 text-lg font-bold tracking-wide">Secure Checkout</h2>
+      <div className="flex justify-between items-center w-full px-4 sm:px-5 py-3 sm:py-4 border-b border-gray-100 bg-white relative z-20 shrink-0">
+        <h2 className="text-gray-800 text-base sm:text-lg font-bold tracking-wide">Secure Checkout</h2>
         <button onClick={() => onClose && onClose()} className="text-gray-400 hover:text-gray-600 transition-colors bg-gray-50 hover:bg-gray-100 p-1.5 rounded-full">
           <X size={20} strokeWidth={2.5} />
         </button>
