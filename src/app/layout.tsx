@@ -10,6 +10,21 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "GwennTopup | Fast & Secure Game Diamond Top-Up",
   description: "Instant delivery, trusted service, best prices. Top up Mobile Legends, Free Fire, PUBG Mobile, and more.",
+  keywords: ["game topup", "buy diamonds", "mobile legends topup", "pubg mobile uc", "free fire diamonds", "cambodia game topup", "khqr topup"],
+  metadataBase: new URL("https://gwenntopup.store"),
+  openGraph: {
+    title: "GwennTopup | Fast & Secure Game Top-Up",
+    description: "Instant delivery, trusted service, best prices for all your favorite games.",
+    url: "https://gwenntopup.store",
+    siteName: "GwennTopup",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "GwennTopup | Game Top-Up",
+    description: "Instant game top up in Cambodia via KhqrPay.",
+  }
 };
 
 export default function RootLayout({
