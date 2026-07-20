@@ -125,10 +125,10 @@ export async function POST(req: Request) {
       
       if (pkg) {
         // Update existing (do not overwrite pkg.name or category so custom values remain intact)
+        // Also don't overwrite pkg.active so packages closed by admin stay closed
         pkg.original_price = originalPrice;
         pkg.api_product_id = service.service.toString();
         pkg.diamonds = diamonds;
-        pkg.active = true;
         await pkg.save();
       } else {
         // Create new

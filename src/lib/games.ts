@@ -52,7 +52,7 @@ export const games: GameConfig[] = [
     id: "valorant",
     name: "Valorant",
     publisher: "Riot Games",
-    image: "/game/valorant.png",
+    image: "/game/Val.jpg",
     requiresZoneId: false,
     g2bulkCode: "valorant",
   },
