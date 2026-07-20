@@ -58,7 +58,8 @@ export async function POST(req: Request) {
     if (paymentMethod === "aba") {
       const protocol = req.headers.get("x-forwarded-proto") || "http";
       const host = req.headers.get("host") || "localhost:3000";
-      const webhook_url = `${protocol}://${host}/api/webhooks/khqr`;
+      const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || `${protocol}://${host}`;
+      const webhook_url = `${baseUrl}/api/webhooks/khqr`;
       
       const secret = (process.env.KHQRPAY_SECRET || "5DZq745PvGy1h1bzISImPC7PQMHPHzkX").trim();
       const profile = (process.env.KHQRPAY_PROFILE || "5naBW0cACcdMewjeavsGmbvR9Fvv0PAz").trim();
@@ -77,6 +78,8 @@ export async function POST(req: Request) {
         transaction_id: orderId,
         amount: amount,
         success_url: webhook_url,
+        webhook_url: webhook_url, // Added for server-to-server callback
+        callback_url: webhook_url, // Added for server-to-server callback
         remark: remark,
         hash: hash
       });
