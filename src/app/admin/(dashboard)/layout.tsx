@@ -54,7 +54,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </nav>
 
         <div className="p-4 border-t border-white/10">
-          <button className="flex items-center gap-3 px-4 py-3 rounded-xl w-full text-red-400 hover:bg-red-400/10 transition-colors font-medium text-sm">
+          <button 
+            onClick={async () => {
+              await fetch('/api/admin/logout', { method: 'POST' });
+              window.location.href = '/admin/login';
+            }}
+            className="flex items-center gap-3 px-4 py-3 rounded-xl w-full text-red-400 hover:bg-red-400/10 transition-colors font-medium text-sm"
+          >
             <LogOut size={18} />
             Logout
           </button>

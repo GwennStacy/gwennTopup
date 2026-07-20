@@ -7,6 +7,16 @@ import Game from "@/models/Game";
 
 import crypto from "crypto";
 import { rateLimit } from "@/lib/rateLimit";
+import { z } from "zod";
+
+const createOrderSchema = z.object({
+  gameId: z.string().min(1, "Game ID is required"),
+  packageId: z.string().min(1, "Package ID is required"),
+  userId: z.string().min(1, "User ID is required").max(100, "User ID is too long"),
+  zoneId: z.string().optional(),
+  paymentMethod: z.string().min(1, "Payment method is required"),
+});
+
 export async function POST(req: Request) {
   try {
     const ip = req.headers.get("x-forwarded-for") || "127.0.0.1";
@@ -19,11 +29,13 @@ export async function POST(req: Request) {
     await connectToDatabase();
     
     const body = await req.json();
-    const { gameId, packageId, userId, zoneId, paymentMethod } = body;
+    const validation = createOrderSchema.safeParse(body);
     
-    if (!gameId || !packageId || !userId || !paymentMethod) {
-      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+    if (!validation.success) {
+      return NextResponse.json({ error: "Invalid input", details: validation.error.format() }, { status: 400 });
     }
+    
+    const { gameId, packageId, userId, zoneId, paymentMethod } = validation.data;
     
     // Fetch package to get the exact total price
     const pkg = await Package.findById(packageId);
