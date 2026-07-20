@@ -30,10 +30,10 @@ export async function proxy(request: NextRequest) {
 
       if (!isLocalhost && !allowedIps.includes(clientIp)) {
         if (pathname.startsWith('/api/')) {
-          return NextResponse.json({ error: 'Access Denied: IP not whitelisted.' }, { status: 403 });
+          return NextResponse.json({ error: 'Not Found' }, { status: 404 });
         }
-        // Return a simple 403 text response for pages
-        return new NextResponse('403 Forbidden - Access Denied. Your IP (' + clientIp + ') is not whitelisted.', { status: 403 });
+        // Return a simple 404 text response for pages to obscure the admin panel
+        return new NextResponse('404 Not Found', { status: 404 });
       }
     }
     // --- END IP WHITELIST CHECK ---
