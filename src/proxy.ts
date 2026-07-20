@@ -22,8 +22,8 @@ export async function proxy(request: NextRequest) {
       // Get client IP
       const forwardedFor = request.headers.get('x-forwarded-for');
       const realIp = request.headers.get('x-real-ip');
-      // request.ip is available in Vercel/Next.js edge runtimes
-      const clientIp = request.ip || (forwardedFor ? forwardedFor.split(',')[0].trim() : null) || realIp || '127.0.0.1';
+      // request.ip was removed in newer Next.js versions
+      const clientIp = (forwardedFor ? forwardedFor.split(',')[0].trim() : null) || realIp || '127.0.0.1';
 
       // Always allow localhost for development
       const isLocalhost = clientIp === '127.0.0.1' || clientIp === '::1' || clientIp === 'localhost';
