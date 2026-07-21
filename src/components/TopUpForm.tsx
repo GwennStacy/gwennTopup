@@ -250,7 +250,7 @@ export default function TopUpForm({ gameId, gameApiId, requiresZoneId = false, p
         <span className="font-black text-sm sm:text-lg text-[#FACC15] drop-shadow-md leading-none">
           ${pkg.price.toFixed(2)}
         </span>
-        <span className={clsx("font-semibold text-[9px] sm:text-xs mt-1 sm:mt-1.5 leading-tight truncate px-1", selectedPackage === pkg.id ? "text-white" : "text-gray-300")}>
+        <span className={clsx("font-semibold text-[9px] sm:text-xs mt-1 sm:mt-1.5 leading-tight line-clamp-2 px-1", selectedPackage === pkg.id ? "text-white" : "text-gray-300")}>
           {pkg.name}
         </span>
       </div>

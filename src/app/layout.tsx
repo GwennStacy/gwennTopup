@@ -12,6 +12,11 @@ export const metadata: Metadata = {
   description: "Instant delivery, trusted service, best prices. Top up Mobile Legends, Free Fire, PUBG Mobile, and more.",
   keywords: ["game topup", "buy diamonds", "mobile legends topup", "pubg mobile uc", "free fire diamonds", "cambodia game topup", "khqr topup", "ទិញពេជ្រហ្គេម", "បញ្ចូលលុយហ្គេម", "ពេជ្រ Mobile Legends"],
   metadataBase: new URL("https://gwenntopup.store"),
+  icons: {
+    icon: "/icon.png",
+    shortcut: "/gwenn-logo-tr.png",
+    apple: "/icon.png",
+  },
   openGraph: {
     title: "GwennTopup | Fast & Secure Game Top-Up",
     description: "Instant delivery, trusted service, best prices for all your favorite games.",
@@ -40,6 +45,43 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         {children}
         <script src="https://khqr.cc/khqrcc-plugin.js" async></script>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "WebSite",
+                  "@id": "https://gwenntopup.store/#website",
+                  "url": "https://gwenntopup.store/",
+                  "name": "GwennTopup",
+                  "description": "Fast & Secure Game Diamond Top-Up",
+                  "potentialAction": [
+                    {
+                      "@type": "SearchAction",
+                      "target": {
+                        "@type": "EntryPoint",
+                        "urlTemplate": "https://gwenntopup.store/?q={search_term_string}"
+                      },
+                      "query-input": "required name=search_term_string"
+                    }
+                  ]
+                },
+                {
+                  "@type": "Organization",
+                  "@id": "https://gwenntopup.store/#organization",
+                  "name": "GwennTopup",
+                  "url": "https://gwenntopup.store/",
+                  "logo": {
+                    "@type": "ImageObject",
+                    "url": "https://gwenntopup.store/gwenn-logo-tr.png"
+                  }
+                }
+              ]
+            })
+          }}
+        />
       </body>
     </html>
   );
