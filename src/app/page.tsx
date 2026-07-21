@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import PopularGames from "@/components/PopularGames";
+import MiniSlider from "@/components/MiniSlider";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -9,6 +10,7 @@ export default function Home() {
       <Navbar />
       <Hero />
       <PopularGames />
+      <MiniSlider />
       <Footer />
     </main>
   );
