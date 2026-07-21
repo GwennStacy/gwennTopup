@@ -78,6 +78,30 @@ export async function POST(req: Request) {
            if (numMatch) diamonds = parseInt(numMatch[1], 10);
         }
 
+        let displayName = service.name;
+        let badge = "";
+
+        // Add Bonus for Free Fire Cambodia Server (10% bonus for standard packages)
+        if (matchingGame.id_string === "freefire" || matchingGame.id_string === "ff" || matchingGame.g2bulkCode === "freefire_sg") {
+           const lowerName = service.name.toLowerCase();
+           const isStandardPackage = diamonds >= 100 && 
+             !lowerName.includes("less is more") && 
+             !lowerName.includes("level") && 
+             !lowerName.includes("pass") && 
+             !lowerName.includes("weekly") && 
+             !lowerName.includes("monthly") &&
+             !lowerName.includes("membership");
+
+           if (isStandardPackage) {
+              const bonus = Math.floor(diamonds * 0.10);
+              diamonds = diamonds + bonus;
+              displayName = `${diamonds - bonus} 💎 + ${bonus} Bonus`;
+              badge = "🔥 ថែម " + bonus;
+           } else if (diamonds > 0 && !lowerName.includes("level") && !lowerName.includes("weekly") && !lowerName.includes("monthly") && !lowerName.includes("less is more")) {
+              displayName = `${diamonds} 💎`;
+           }
+        }
+
         const isSpecialPackage = diamonds === 0;
         
         // For special packages, group by a cleaned version of the name
@@ -94,13 +118,13 @@ export async function POST(req: Request) {
         const existingBest = bestServices.get(key);
         
         if (!existingBest || currentRate < parseFloat(existingBest.service.rate)) {
-          bestServices.set(key, { service, matchingGame, diamonds, isSpecialPackage });
+          bestServices.set(key, { service, matchingGame, diamonds, isSpecialPackage, displayName, badge });
         }
       }
     }
 
     // Now save the best services to the database
-    for (const { service, matchingGame, diamonds, isSpecialPackage } of bestServices.values()) {
+    for (const { service, matchingGame, diamonds, isSpecialPackage, displayName, badge } of bestServices.values()) {
       // Add 20% margin to rate for selling price, or keep rate as is if you want standard pricing
       const originalPrice = parseFloat(service.rate);
       const defaultSellingPrice = parseFloat((originalPrice * 1.2).toFixed(2));
@@ -129,21 +153,26 @@ export async function POST(req: Request) {
         pkg.original_price = originalPrice;
         pkg.api_product_id = service.service.toString();
         pkg.diamonds = diamonds;
+        // Optionally update the badge if one was generated
+        if (badge && !pkg.badge) {
+           pkg.badge = badge;
+        }
         await pkg.save();
       } else {
         // Create new
-        const passKeywords = /pass|prime|weekly|monthly|pack|member|starlight|twilight|emblem|materials|deal/i;
+        const passKeywords = /pass|prime|weekly|monthly|pack|member|starlight|twilight|emblem|materials|deal|membership/i;
         const defaultCategory = passKeywords.test(service.name) ? "Passes & Deals" : "Normal Top-Up";
 
         await Package.create({
           game_id: matchingGame.id_string,
-          name: service.name,
+          name: displayName || service.name,
           original_price: originalPrice,
           price: defaultSellingPrice,
           diamonds,
           active: true,
           api_product_id: service.service.toString(),
           category: defaultCategory,
+          badge: badge || undefined,
         });
       }
 

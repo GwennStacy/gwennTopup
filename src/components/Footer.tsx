@@ -13,7 +13,7 @@ export default function Footer() {
           <div className="space-y-4">
             <Link href="/" className="flex items-center group mb-6 gap-3">
               <div className="relative w-20 h-20 md:w-28 md:h-28 transition-transform duration-300 hover:scale-105">
-                <Image src="/gwenn-logo-tr.png" alt="Gwenn Topup" fill className="object-contain" priority />
+                <Image src="/gwenn-logo-tr.png" alt="Gwenn Topup" fill className="object-contain" priority sizes="(max-width: 768px) 100vw, 300px" />
               </div>
               <span className="text-lg md:text-xl font-black tracking-widest text-white uppercase">
                 Gwenn<span className="text-gradient">Topup</span>

@@ -56,7 +56,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link href="/" className="flex items-center group mt-1 gap-2 md:gap-3">
           <div className="relative w-16 h-16 md:w-20 md:h-20 transition-transform duration-300 hover:scale-105 -my-2">
-            <Image src="/gwenn-logo-tr.png" alt="Gwenn Topup" fill className="object-contain" priority />
+            <Image src="/gwenn-logo-tr.png" alt="Gwenn Topup" fill className="object-contain" priority sizes="(max-width: 768px) 100vw, 300px" />
           </div>
           <span className="text-sm md:text-lg font-black tracking-widest text-white uppercase">
             Gwenn<span className="text-gradient">Topup</span>
