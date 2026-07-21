@@ -60,7 +60,12 @@ export async function POST(req: Request) {
 
         // Strict matching for Free Fire
         if (g.id_string === "ff" || g.id_string === "freefire" || g.g2bulkCode === "freefire") {
-          return service.category === "Freefire SGMY";
+          return service.category === "Freefire SGMY" || service.category === "Freefire SG";
+        }
+        
+        // Strict matching for Valorant
+        if (g.id_string === "valorant" || g.g2bulkCode === "valorant") {
+          return service.category === "Valorant Cambodia";
         }
         
         return service.category.toLowerCase().includes(g.name.toLowerCase()) || 
