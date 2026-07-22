@@ -536,6 +536,9 @@ export default function TopUpForm({ gameId, gameApiId, requiresZoneId = false, p
             orderId={orderResult.orderId}
             checkoutUrl={(orderResult as any).checkoutUrl}
             amount={orderResult.amount}
+            packageName={selectedPkgData?.name}
+            userId={userId}
+            zoneId={zoneId}
             onClose={() => { setOrderResult(null); window.location.reload(); }}
           />
         </div>
