@@ -279,7 +279,7 @@ export default function TopUpForm({ gameId, gameApiId, requiresZoneId = false, p
       const data = await response.json();
       
       if (response.ok && data.valid === "valid") {
-        setPlayerName(data.name);
+        setPlayerName(data.name || "Verified Player");
       } else {
         setCheckError(data.error || "Invalid Player ID or Zone ID.");
       }
@@ -295,7 +295,8 @@ export default function TopUpForm({ gameId, gameApiId, requiresZoneId = false, p
 
   const handleBuyNow = async () => {
     if (!userId || !selectedPackage || !selectedPayment) return;
-    
+    if (!playerName) return;
+
     setIsSubmitting(true);
     try {
       const response = await fetch("/api/orders/create", {
@@ -352,7 +353,11 @@ export default function TopUpForm({ gameId, gameApiId, requiresZoneId = false, p
               <input
                 type="text"
                 value={userId}
-                onChange={(e) => setUserId(e.target.value)}
+                onChange={(e) => {
+                  setUserId(e.target.value);
+                  setPlayerName(null);
+                  setCheckError(null);
+                }}
                 placeholder="Enter User ID"
                 className="w-full bg-white/5 border border-white/10 rounded-lg py-2 px-4 text-white focus:outline-none focus:border-primary transition-all"
               />
@@ -363,7 +368,11 @@ export default function TopUpForm({ gameId, gameApiId, requiresZoneId = false, p
                 <input
                   type="text"
                   value={zoneId}
-                  onChange={(e) => setZoneId(e.target.value)}
+                  onChange={(e) => {
+                    setZoneId(e.target.value);
+                    setPlayerName(null);
+                    setCheckError(null);
+                  }}
                   placeholder="Zone ID"
                   className="w-full bg-white/5 border border-white/10 rounded-lg py-2 px-4 text-white focus:outline-none focus:border-primary transition-all"
                 />
@@ -374,7 +383,7 @@ export default function TopUpForm({ gameId, gameApiId, requiresZoneId = false, p
           <div className="mt-5 flex flex-col sm:flex-row items-center gap-3">
             <button
               onClick={handleCheckId}
-              disabled={!userId || isChecking}
+              disabled={!userId || isChecking || (requiresZoneId && !zoneId)}
               className="w-full sm:w-auto px-6 py-2 rounded-lg bg-primary hover:bg-primary/90 disabled:opacity-50 text-white font-medium transition-all flex items-center justify-center gap-2 glow-primary"
             >
               {isChecking ? <Loader2 size={18} className="animate-spin" /> : <User size={18} />}
@@ -507,8 +516,13 @@ export default function TopUpForm({ gameId, gameApiId, requiresZoneId = false, p
 
           <button
             onClick={handleBuyNow}
-            disabled={!userId || !selectedPackage || !selectedPayment || isSubmitting}
-            className="w-full py-4 rounded-xl bg-primary hover:bg-primary/90 disabled:opacity-50 disabled:hover:bg-primary text-white font-bold text-lg transition-all items-center justify-center gap-2 glow-primary hidden lg:flex"
+            disabled={!userId || !playerName || !selectedPackage || !selectedPayment || isSubmitting}
+            className={clsx(
+              "w-full py-4 rounded-xl text-white font-bold text-lg transition-all items-center justify-center gap-2 hidden lg:flex",
+              (!userId || !playerName || !selectedPackage || !selectedPayment || isSubmitting)
+                ? "bg-primary/20 opacity-50 cursor-not-allowed"
+                : "bg-primary hover:bg-primary/90 glow-primary"
+            )}
           >
             {isSubmitting ? <Loader2 className="animate-spin" size={20} /> : <>Buy Now <ChevronRight size={20} /></>}
           </button>
@@ -523,8 +537,13 @@ export default function TopUpForm({ gameId, gameApiId, requiresZoneId = false, p
         </div>
         <button
           onClick={handleBuyNow}
-          disabled={!userId || !selectedPackage || !selectedPayment || isSubmitting}
-          className="px-8 py-3 rounded-xl bg-primary hover:bg-primary/90 disabled:opacity-50 disabled:hover:bg-primary text-white font-bold transition-all flex items-center justify-center gap-2 glow-primary"
+          disabled={!userId || !playerName || !selectedPackage || !selectedPayment || isSubmitting}
+          className={clsx(
+            "px-8 py-3 rounded-xl text-white font-bold transition-all flex items-center justify-center gap-2",
+            (!userId || !playerName || !selectedPackage || !selectedPayment || isSubmitting)
+              ? "bg-primary/20 opacity-50 cursor-not-allowed"
+              : "bg-primary hover:bg-primary/90 glow-primary"
+          )}
         >
           {isSubmitting ? <Loader2 className="animate-spin" size={18} /> : <>Buy Now <ChevronRight size={18} /></>}
         </button>
