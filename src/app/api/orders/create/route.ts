@@ -71,13 +71,15 @@ export async function POST(req: Request) {
       const safeRemark = `Topup ${game.name} - ${userId}`.replace(/[^a-zA-Z0-9 -]/g, '').trim().replace(/\s+/g, ' ');
       const remark = safeRemark.substring(0, 50).trim(); // KhqrPay remark limit and trim trailing spaces
       
-      const hashString = secret + orderId + amount + webhook_url + remark;
+      const success_url = `${baseUrl}/checkout/${orderId}`;
+      
+      const hashString = secret + orderId + amount + success_url + remark;
       const hash = crypto.createHash("sha1").update(hashString).digest("hex");
       
       const params = new URLSearchParams({
         transaction_id: orderId,
         amount: amount,
-        success_url: webhook_url,
+        success_url: success_url,
         webhook_url: webhook_url, // Added for server-to-server callback
         callback_url: webhook_url, // Added for server-to-server callback
         remark: remark,

@@ -36,16 +36,32 @@ export async function POST(req: Request) {
       const expectedHash = crypto.createHash("sha256").update(secret + reqTime + transactionId + amount + "SUCCESS").digest("hex");
       if (body.hash !== expectedHash && body.hash !== body.hash.toUpperCase()) {
          console.warn(`Hash mismatch warning. Expected: ${expectedHash}, Got: ${body.hash}. Continuing since this might be a test or format differs.`);
-         // In production we would return 401: return NextResponse.json({ success: false, error: "Invalid hash" }, { status: 401 });
-         // Since documentation says sha256(secret+req_time+transaction_id+amount+"SUCCESS") we verify it, but some older apis use md5 or sha1. We just warn for now to prevent breaking existing transactions during migration.
-         // Actually, let's enforce it since the documentation explicitly says "Always verify this on your server before fulfilling any order."
-         
-         if (body.hash.toLowerCase() !== expectedHash.toLowerCase()) {
-           console.error("Invalid webhook hash. Order will not be fulfilled automatically.");
-           return NextResponse.json({ success: false, error: "Invalid hash signature" }, { status: 401 });
-         }
       }
     }
+
+    // Securely verify payment status directly with KhqrPay to prevent fake webhooks
+    const profile = process.env.KHQRPAY_PROFILE || "5naBW0cACcdMewjeavsGmbvR9Fvv0PAz";
+    const checkUrl = `https://khqr.cc/api/${profile}/payment-gateway/v1/payments/check-transv2-khqrcc`;
+    const checkHash = crypto.createHash("sha1").update(secret + transactionId).digest("hex");
+    
+    const requestParams = new URLSearchParams({
+      transaction_id: transactionId,
+      hash: checkHash
+    });
+
+    const verifyResponse = await fetch(checkUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: requestParams.toString()
+    });
+    
+    const verifyData = await verifyResponse.json();
+    
+    if (verifyData.responseCode !== 0 || !verifyData.data || verifyData.data.status !== "success") {
+       console.error("Payment not verified by gateway API directly", verifyData);
+       return NextResponse.json({ success: false, error: "Payment not verified" }, { status: 400 });
+    }
+
 
     await connectToDatabase();
 
